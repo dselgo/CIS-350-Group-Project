@@ -20,27 +20,33 @@ public class TwitterEngine {
 		engine = TwitterFactory.getSingleton();
 	}
 
-	public Status updateStatus(String status) {
+	public void updateStatus(String status) {
 		try {
 			Status result = engine.updateStatus(status);
-			return result;
+			table.clear();
+			table.add(new Tweet(result.getId(), result.getCreatedAt(),
+						result.getUser().getName(), result.getUser().getName(),
+						result.getUser().getStatus().getText(), result.getUser().getFriendsCount(),
+						result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
 			System.out.println("Tweet failed.");
 		}
-		return null;
 	}
 
-	public Status retweet(long SID) {
+	public void retweet(long SID) {
 		try {
 			Status result = engine.retweetStatus(SID);
-			return result;
+			table.clear();
+			table.add(new Tweet(result.getId(), result.getCreatedAt(),
+						result.getUser().getName(), result.getUser().getName(),
+						result.getUser().getStatus().getText(), result.getUser().getFriendsCount(),
+						result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
 			System.out.println("Retweet failed.");
 		}
-		return null;
 	}
 
-	public TableModel searchPeople(String query) {
+	public void searchPeople(String query) {
 		try {
 			ResponseList<User> results = engine.searchUsers(query, NUM_PAGES);
 			table.clear();
@@ -50,14 +56,12 @@ public class TwitterEngine {
 						results.get(i).getStatus().getText(), results.get(i).getFriendsCount(),
 						results.get(i).getFollowersCount()));
 			}
-			return table;
 		} catch (TwitterException ex) {
 			System.out.println("Search failed.");
 		}
-		return null;
 	}
 
-	public TableModel searchTweets(String query) {
+	public void searchTweets(String query) {
 		try {
 			Query toSearch = new Query(query);
 			List<Status> results = engine.search(toSearch).getTweets();
@@ -68,29 +72,25 @@ public class TwitterEngine {
 						results.get(i).getUser().getStatus().getText(), results.get(i).getUser().getFriendsCount(),
 						results.get(i).getUser().getFollowersCount()));
 			}
-			return table;
 		} catch (TwitterException ex) {
 			System.out.println("Search failed.");
 		}
-		return null;
 	}
 
-	public User followUser(String screenName) {
+	public void followUser(String screenName) {
 		try {
-			return engine.createFriendship(screenName);
+			engine.createFriendship(screenName);
 		} catch (TwitterException ex) {
 			System.out.println("Follow unsuccessful.");
 		}
-		return null;
 	}
 
-	public User followUser(long ID) {
+	public void followUser(long ID) {
 		try {
-			return engine.createFriendship(ID);
+			engine.createFriendship(ID);
 		} catch (TwitterException ex) {
 			System.out.println("Follow unsuccessful.");
 		}
-		return null;
 	}
 
 	public TableModel getTable() {
