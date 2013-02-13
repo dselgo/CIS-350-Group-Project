@@ -96,6 +96,18 @@ public class TwitterEngine {
 	public TableModel getTable() {
 		return table;
 	}
+	
+	public String[] getUserInformation(){
+		String[] info = new String[4];
+		try{
+			User user = engine.showUser(engine.getId());
+			info[0] = user.getName();
+			info[1] = user.getScreenName();
+			info[2] = "" + user.getFriendsCount();
+			info[3] = "" + user.getFollowersCount();
+		} catch (Exception ex){}
+		return info;
+	}
 
 	public static void main(String[] args) {
 		Twitter4JGUI gui = new Twitter4JGUI();
