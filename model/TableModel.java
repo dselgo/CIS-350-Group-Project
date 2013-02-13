@@ -14,7 +14,7 @@ import java.lang.Integer;
 public class TableModel extends AbstractTableModel {
 
 	public String[] columnNames = new String[] { "Date", "Login Name",
-			"Display Name", "Friends", "Followers" };
+			"Display Name", "Following", "Followers" };
 	public ArrayList<Tweet> tweets;
 
 	/**
