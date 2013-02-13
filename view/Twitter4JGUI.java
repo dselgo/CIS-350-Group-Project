@@ -275,6 +275,11 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         tweetTable.setModel(engine.getTable());
         tweetTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tweetTable);
+        tweetTable.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				tableMouseClicked();
+			}
+		});
 
         displayTweetText.setColumns(20);
         displayTweetText.setRows(5);
@@ -355,6 +360,13 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         engine.searchTweets(searchTopicTextField.getText());
     }//GEN-LAST:event_searchTopicTextFieldActionPerformed
 
+    private void tableMouseClicked() {
+		int index = tweetTable.getSelectedRow();
+		if (index != -1) {
+			Tweet t = engine.getTable().get(index);
+			displayTweetText.setText(t.getText());
+		}
+	}
     /**
      * @param args the command line arguments
      */
