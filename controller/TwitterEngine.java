@@ -18,6 +18,7 @@ public class TwitterEngine {
 
 	public TwitterEngine() {
 		engine = TwitterFactory.getSingleton();
+		table = new TableModel();
 	}
 
 	public void updateStatus(String status) {

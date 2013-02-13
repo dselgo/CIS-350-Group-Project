@@ -57,12 +57,10 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         followersLabel = new javax.swing.JLabel();
         twitterPic = new javax.swing.JLabel();
         currentUserLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         switchAccountButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new JTable(engine.getTable());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        tweetTable = new JTable(engine.getTable());
+        displayTweetText = new javax.swing.JTextArea();
         menubar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
@@ -266,10 +264,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         currentUserLabel.setForeground(new java.awt.Color(255, 255, 255));
         currentUserLabel.setText("Current User:");
 
-        jLabel1.setFont(new java.awt.Font("Aharoni", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("getUser");
-
         switchAccountButton.setFont(new java.awt.Font("Aharoni", 0, 12)); // NOI18N
         switchAccountButton.setText("Switch Account");
         switchAccountButton.addActionListener(new java.awt.event.ActionListener() {
@@ -278,22 +272,12 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        tweetTable.setModel(engine.getTable());
+        tweetTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tweetTable);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        displayTweetText.setColumns(20);
+        displayTweetText.setRows(5);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -302,38 +286,34 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mainTabPane)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(displayTweetText)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(switchAccountButton)
                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(twitterPic)
                         .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                            .addComponent(currentUserLabel)
-                            .addGap(12, 12, 12)
-                            .addComponent(jLabel1)))))
+                        .addComponent(currentUserLabel))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(switchAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(currentUserLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1))
+                .addComponent(currentUserLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(twitterPic, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 28, Short.MAX_VALUE))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(displayTweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         fileMenu.setText("File");
@@ -352,7 +332,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -413,17 +393,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel createTweetPanel;
     private javax.swing.JLabel currentUserLabel;
+    private javax.swing.JTextArea displayTweetText;
     private javax.swing.JLabel enterTweetLabel;
     private javax.swing.JTextArea enterTweetTextArea;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel followersLabel;
     private javax.swing.JLabel followingLabel;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane mainTabPane;
     private javax.swing.JMenuBar menubar;
@@ -439,6 +416,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchTopicsButton;
     private javax.swing.JPanel searchTopicsPanel;
     private javax.swing.JButton switchAccountButton;
+    private javax.swing.JTable tweetTable;
     private javax.swing.JScrollPane tweetTextArea;
     private javax.swing.JLabel twitterPic;
     private javax.swing.JButton updateButton;
