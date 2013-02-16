@@ -411,6 +411,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         // feature not available yet
     }//GEN-LAST:event_switchAccountButtonActionPerformed
 
+    /*private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
+        engine.switchAccount("xUSwR5HQkn16PEV7r5fdFQ","tZcgyEAalC2loshrCSMIbgrhZXCPIy534N7JaH5Mho","1090714826-CmtEhJsvpPwBL88zRcvEq3TrHm2R0nN4LPn689f","ziSlknvCbaDxfbndD4kqxjk913M2BXAxZqWOiEk");
+        nameLabelContent.setText(engine.getUserInformation()[0]);
+        displayNameLabelContent.setText(engine.getUserInformation()[1]);
+        followingLabelContent.setText(engine.getUserInformation()[2]);
+        followersLabelContent.setText(engine.getUserInformation()[3]);
+    }//GEN-LAST:event_switchAccountButtonActionPerformed*/
+    
     private void searchPeopleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPeopleTextFieldActionPerformed
         engine.searchPeople(searchPeopleTextField.getText());
     }//GEN-LAST:event_searchPeopleTextFieldActionPerformed
@@ -442,14 +450,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private void quitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitMenuItemActionPerformed
-    
-    /*private void tableMouseClicked() {
-		int index = tweetTable.getSelectedRow();
-		if (index != -1) {
-			Tweet t = engine.getTable().get(index);
-			displayTweetText.setText(t.getText());
-		}
-	}*/
+
     /**
      * @param args the command line arguments
      */
@@ -522,3 +523,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private TwitterEngine engine;
 }
+
+ 
+

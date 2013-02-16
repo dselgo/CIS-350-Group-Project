@@ -6,6 +6,9 @@ package controller;
  *
  */
 import java.util.List;
+import java.util.Properties;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import twitter4j.*;
 import view.*;
@@ -77,13 +80,13 @@ public class TwitterEngine {
 		}
 	}
 
-	public void followUser(String screenName) {
+	/*public void followUser(String screenName) {
 		try {
 			engine.createFriendship(screenName);
 		} catch (TwitterException ex) {
 			System.out.println("Follow unsuccessful.");
 		}
-	}
+	}*/
 
 	public void followUser(long ID) {
 		try {
@@ -108,6 +111,21 @@ public class TwitterEngine {
 		} catch (Exception ex){}
 		return info;
 	}
+        
+        public void switchAccount(String consumerKey, String consumerSecret, 
+                                  String accessToken, String accessTokenSecret){
+            try{
+                Properties prop = new Properties();
+                
+                prop.setProperty("oauth.consumerKey", consumerKey);
+                prop.setProperty("oauth.consumerSecret", consumerSecret);
+                prop.setProperty("oauth.accessToken", accessToken);
+                prop.setProperty("oauth.accessTokenSecret", accessTokenSecret);
+                prop.store(new FileOutputStream("src/twitter4j.properties"), null);
+            } catch (IOException ex){
+                System.out.println("Write to .properties file failed");
+            }
+        }
 
 	public static void main(String[] args) {
 		Twitter4JGUI gui = new Twitter4JGUI();
