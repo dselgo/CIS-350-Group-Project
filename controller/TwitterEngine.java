@@ -28,7 +28,7 @@ public class TwitterEngine {
 			Status result = engine.updateStatus(status);
 			table.clear();
 			table.add(new Tweet(result.getId(), result.getCreatedAt(),
-						result.getUser().getName(), result.getUser().getName(),
+						result.getUser().getScreenName(), result.getUser().getName(),
 						result.getText(), result.getUser().getFriendsCount(),
 						result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
@@ -41,8 +41,8 @@ public class TwitterEngine {
 			Status result = engine.retweetStatus(SID);
 			table.clear();
 			table.add(new Tweet(result.getId(), result.getCreatedAt(),
-						result.getUser().getName(), result.getUser().getName(),
-						result.getUser().getStatus().getText(), result.getUser().getFriendsCount(),
+						result.getUser().getScreenName(), result.getUser().getName(),
+						result.getText(), result.getUser().getFriendsCount(),
 						result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
 			System.out.println("Retweet failed.");
@@ -55,7 +55,7 @@ public class TwitterEngine {
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
 				table.add(new Tweet(results.get(i).getId(), results.get(i).getCreatedAt(),
-						results.get(i).getName(), results.get(i).getName(),
+						results.get(i).getScreenName(), results.get(i).getName(),
 						results.get(i).getStatus().getText(), results.get(i).getFriendsCount(),
 						results.get(i).getFollowersCount()));
 			}
@@ -71,7 +71,7 @@ public class TwitterEngine {
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
 				table.add(new Tweet(results.get(i).getId(), results.get(i).getCreatedAt(),
-						results.get(i).getUser().getName(), results.get(i).getUser().getName(),
+						results.get(i).getUser().getScreenName(), results.get(i).getUser().getName(),
 						results.get(i).getText(), results.get(i).getUser().getFriendsCount(),
 						results.get(i).getUser().getFollowersCount()));
 			}

@@ -19,7 +19,7 @@ public class Tweet {
  * @param id - the id of the tweet.
  * @param createdAt - the date and time the tweet was created.
  * @param loginName - the login name of the user who wrote the tweet.
- * @param displayName - the diplay nme of the user who wrote the tweet.
+ * @param displayName - the diplay name of the user who wrote the tweet.
  * @param text - the actual text of the tweet.
  * @param friendsCount - the number of friends that the user has.
  * @param followersCount - the number of followers that the user has.

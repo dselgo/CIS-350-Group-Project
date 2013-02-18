@@ -34,6 +34,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        consumerSecretInputDialog = new javax.swing.JOptionPane("Input");
         mainPanel = new javax.swing.JPanel();
         mainTabPane = new javax.swing.JTabbedPane();
         createTweetPanel = new javax.swing.JPanel();
@@ -64,9 +65,16 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tweetTable = new JTable(engine.getTable());
         displayTweetText = new javax.swing.JTextArea();
+        followButton = new javax.swing.JButton();
+        retweetButton = new javax.swing.JButton();
         menubar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         quitMenuItem = new javax.swing.JMenuItem();
+
+        consumerSecretInputDialog.setMessage("Please enter your consumer secret:");
+        consumerSecretInputDialog.setMessageType(3);
+        consumerSecretInputDialog.setOptionType(2);
+        consumerSecretInputDialog.setWantsInput(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Twitter Desktop Application");
@@ -103,14 +111,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tweetTextArea)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createTweetPanelLayout.createSequentialGroup()
-                .addGap(0, 150, Short.MAX_VALUE)
-                .addComponent(enterTweetLabel)
-                .addGap(149, 149, 149))
             .addGroup(createTweetPanelLayout.createSequentialGroup()
-                .addGap(177, 177, 177)
+                .addGap(122, 122, 122)
                 .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createTweetPanelLayout.createSequentialGroup()
+                .addContainerGap(99, Short.MAX_VALUE)
+                .addComponent(enterTweetLabel)
+                .addGap(96, 96, 96))
         );
         createTweetPanelLayout.setVerticalGroup(
             createTweetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +127,9 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addComponent(enterTweetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tweetTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         mainTabPane.addTab("Compose a Tweet", createTweetPanel);
@@ -135,7 +143,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             }
         });
 
-        searchTopicsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchTopicsButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
         searchTopicsButton.setText("Search Topics");
         searchTopicsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,19 +156,19 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         searchTopicsPanelLayout.setHorizontalGroup(
             searchTopicsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchTopicsPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(searchTopicsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(searchTopicsPanelLayout.createSequentialGroup()
-                        .addComponent(searchTopicTextField)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchTopicsPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(searchTopicTextField))
+                    .addGroup(searchTopicsPanelLayout.createSequentialGroup()
+                        .addGap(123, 123, 123)
                         .addComponent(searchTopicLabel)
-                        .addGap(177, 177, 177))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchTopicsPanelLayout.createSequentialGroup()
-                .addContainerGap(156, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(searchTopicsPanelLayout.createSequentialGroup()
+                .addGap(110, 110, 110)
                 .addComponent(searchTopicsButton)
-                .addGap(150, 150, 150))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
         searchTopicsPanelLayout.setVerticalGroup(
             searchTopicsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +179,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addComponent(searchTopicTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(searchTopicsButton)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         mainTabPane.addTab("Search Topics", searchTopicsPanel);
@@ -185,7 +193,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             }
         });
 
-        searchPeopleButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchPeopleButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
         searchPeopleButton.setText("Search People");
         searchPeopleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,15 +211,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(searchPeopleTextField))
                     .addGroup(searchPeoplePanelLayout.createSequentialGroup()
-                        .addGroup(searchPeoplePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPeoplePanelLayout.createSequentialGroup()
-                                .addGap(178, 178, 178)
-                                .addComponent(searchPeopleLabel))
-                            .addGroup(searchPeoplePanelLayout.createSequentialGroup()
-                                .addGap(147, 147, 147)
-                                .addComponent(searchPeopleButton)))
-                        .addGap(0, 147, Short.MAX_VALUE)))
+                        .addGap(124, 124, 124)
+                        .addComponent(searchPeopleLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPeoplePanelLayout.createSequentialGroup()
+                .addGap(0, 109, Short.MAX_VALUE)
+                .addComponent(searchPeopleButton)
+                .addGap(107, 107, 107))
         );
         searchPeoplePanelLayout.setVerticalGroup(
             searchPeoplePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +229,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addComponent(searchPeopleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(searchPeopleButton)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         mainTabPane.addTab("Search People", searchPeoplePanel);
@@ -289,7 +296,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(followersLabelContent))
                     .addComponent(profileLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(0, 200, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,44 +344,75 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         displayTweetText.setLineWrap(true);
         displayTweetText.setRows(5);
 
+        followButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        followButton.setText("Follow");
+        followButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                followButtonActionPerformed(evt);
+            }
+        });
+
+        retweetButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        retweetButton.setText("Retweet");
+        retweetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retweetButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mainTabPane)
-                            .addComponent(displayTweetText))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(switchAccountButton)
-                                .addComponent(twitterPic))
-                            .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(0, 2, Short.MAX_VALUE)
+                                .addComponent(displayTweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(retweetButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                                    .addComponent(followButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(twitterPic)
+                                .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(switchAccountButton))
+                        .addContainerGap(13, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(switchAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(twitterPic, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                         .addComponent(mainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(followButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(retweetButton)
+                                .addGap(11, 11, 11))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(displayTweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(switchAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(displayTweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                        .addComponent(twitterPic, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -396,11 +434,13 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -408,17 +448,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private static final Logger LOG = Logger.getLogger(Twitter4JGUI.class.getName());
 
     private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
-        // feature not available yet
+        String consumerKey = JOptionPane.showInputDialog("Please enter your consumer key:");
+        String consumerSecret = JOptionPane.showInputDialog("Please enter your consumer secret:");
+        String accessToken = JOptionPane.showInputDialog("Please enter your access token:");
+        String accessTokenSecret = JOptionPane.showInputDialog("Please enter your access token secret:");
+        engine.switchAccount(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+        updateUserInformation();
     }//GEN-LAST:event_switchAccountButtonActionPerformed
 
-    /*private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
-        engine.switchAccount("xUSwR5HQkn16PEV7r5fdFQ","tZcgyEAalC2loshrCSMIbgrhZXCPIy534N7JaH5Mho","1090714826-CmtEhJsvpPwBL88zRcvEq3TrHm2R0nN4LPn689f","ziSlknvCbaDxfbndD4kqxjk913M2BXAxZqWOiEk");
-        nameLabelContent.setText(engine.getUserInformation()[0]);
-        displayNameLabelContent.setText(engine.getUserInformation()[1]);
-        followingLabelContent.setText(engine.getUserInformation()[2]);
-        followersLabelContent.setText(engine.getUserInformation()[3]);
-    }//GEN-LAST:event_switchAccountButtonActionPerformed*/
-    
     private void searchPeopleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPeopleTextFieldActionPerformed
         engine.searchPeople(searchPeopleTextField.getText());
     }//GEN-LAST:event_searchPeopleTextFieldActionPerformed
@@ -451,6 +488,39 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_quitMenuItemActionPerformed
 
+    private void retweetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retweetButtonActionPerformed
+        try {
+            int index = tweetTable.getSelectedRow();
+            if (index != -1){
+                long sid = engine.getTable().get(index).getId();
+                engine.retweet(sid);
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_retweetButtonActionPerformed
+
+    private void followButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followButtonActionPerformed
+        int index = tweetTable.getSelectedRow();
+        if (index != -1){
+            long id = engine.getTable().get(index).getId();
+            engine.followUser(id);
+        }
+    }//GEN-LAST:event_followButtonActionPerformed
+    
+    private void updateUserInformation(){
+        nameLabelContent.setText(engine.getUserInformation()[0]);
+        displayNameLabelContent.setText(engine.getUserInformation()[1]);
+        followingLabelContent.setText(engine.getUserInformation()[2]);
+        followersLabelContent.setText(engine.getUserInformation()[3]);
+    }
+    /*private void tableMouseClicked() {
+		int index = tweetTable.getSelectedRow();
+		if (index != -1) {
+			Tweet t = engine.getTable().get(index);
+			displayTweetText.setText(t.getText());
+		}
+	}*/
     /**
      * @param args the command line arguments
      */
@@ -481,18 +551,23 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                new Twitter4JGUI().setVisible(true);
+                try {
+                    new Twitter4JGUI().setVisible(true);
+                } catch (Exception e){
+                    JOptionPane.showMessageDialog(null, "An error has occurred.");
+                }
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JOptionPane consumerSecretInputDialog;
     private javax.swing.JPanel createTweetPanel;
     private javax.swing.JLabel displayNameLabelContent;
     private javax.swing.JTextArea displayTweetText;
     private javax.swing.JLabel enterTweetLabel;
     private javax.swing.JTextArea enterTweetTextArea;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton followButton;
     private javax.swing.JLabel followersLabel;
     private javax.swing.JLabel followersLabelContent;
     private javax.swing.JLabel followingLabel;
@@ -506,6 +581,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private javax.swing.JLabel profileLabel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JMenuItem quitMenuItem;
+    private javax.swing.JButton retweetButton;
     private javax.swing.JButton searchPeopleButton;
     private javax.swing.JLabel searchPeopleLabel;
     private javax.swing.JPanel searchPeoplePanel;
@@ -523,6 +599,3 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private TwitterEngine engine;
 }
-
- 
-
