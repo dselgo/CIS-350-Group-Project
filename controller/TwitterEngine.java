@@ -1,27 +1,34 @@
 package controller;
 
-/**
- * This class represents the engine that connects to the Twitter Service
- * @author Cameron Ohrt
- *
- */
 import java.util.List;
 import java.util.Properties;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import twitter4j.ResponseList;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
+import twitter4j.Query;
+import twitter4j.conf.ConfigurationBuilder;
+import model.Tweet;
+import model.TableModel;
 
-import twitter4j.*;
-import twitter4j.conf.*;
-import view.*;
-import model.*;
 
+/**
+ * This class represents the engine that connects to the Twitter Service.
+ *
+ * @author Cameron Ohrt
+ */
 public class TwitterEngine {
+
 	private Twitter engine;
 	private TableModel table;
 
 	/**
-	 * Constructor for the TwitterEngine class - uses the twitter4j.properties
-	 * file for authentication values
+	 * Constructor for the TwitterEngine class - uses the
+	 * twitter4j.properties file for authentication values.
 	 */
 	public TwitterEngine() {
 		engine = TwitterFactory.getSingleton();
@@ -29,62 +36,68 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method updates the status of the current user and modifies the table
-	 * model
-	 * 
-	 * @param status
-	 *            the status to be posted
+	 * This method updates the status of the current user
+	 * and modifies the table model.
+	 *
+	 * @param status the status to be posted
 	 */
-	public void updateStatus(String status) {
+	public final void updateStatus(final String status) {
 		try {
 			Status result = engine.updateStatus(status);
 			table.clear();
-			table.add(new Tweet(result.getId(), result.getCreatedAt(), result
-					.getUser().getScreenName(), result.getUser().getName(),
-					result.getText(), result.getUser().getFriendsCount(),
-					result.getUser().getFollowersCount()));
+			table.add(new Tweet(result.getId(),
+				result.getCreatedAt(),
+				result.getUser().getScreenName(),
+				result.getUser().getName(),
+				result.getText(),
+				result.getUser().getFriendsCount(),
+				result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
 			System.out.println("Tweet failed.");
 		}
 	}
 
 	/**
-	 * This method retweets a status selected by the user and modifies the table
-	 * model
-	 * 
-	 * @param SID
-	 *            the status to be retweeted
+	 * This method retweets a status selected by the user
+	 * and modifies the table model.
+	 *
+	 * @param sID the status to be retweeted
 	 */
-	public void retweet(long SID) {
+	public final void retweet(final long sID) {
 		try {
-			Status result = engine.retweetStatus(SID);
+			Status result = engine.retweetStatus(sID);
 			table.clear();
-			table.add(new Tweet(result.getId(), result.getCreatedAt(), result
-					.getUser().getScreenName(), result.getUser().getName(),
-					result.getText(), result.getUser().getFriendsCount(),
-					result.getUser().getFollowersCount()));
+			table.add(new Tweet(result.getId(),
+				result.getCreatedAt(),
+				result.getUser().getScreenName(),
+				result.getUser().getName(),
+				result.getText(),
+				result.getUser().getFriendsCount(),
+				result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
 			System.out.println("Retweet failed.");
 		}
 	}
 
 	/**
-	 * This method searches Twitter for the requested users and updates the
-	 * table model
-	 * 
-	 * @param query
-	 *            the users to be searched
+	 * This method searches Twitter for the requested users
+	 * and updates the table model.
+	 *
+	 * @param query the users to be searched
 	 */
-	public void searchPeople(String query) {
+	public final void searchPeople(final String query) {
 		try {
-			ResponseList<User> results = engine.searchUsers(query, 1);
+			ResponseList<User> results =
+				engine.searchUsers(query, 1);
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
-				table.add(new Tweet(results.get(i).getId(), results.get(i)
-						.getCreatedAt(), results.get(i).getScreenName(),
-						results.get(i).getName(), results.get(i).getStatus()
-								.getText(), results.get(i).getFriendsCount(),
-						results.get(i).getFollowersCount()));
+				table.add(new Tweet(results.get(i).getId(),
+					results.get(i).getCreatedAt(),
+					results.get(i).getScreenName(),
+					results.get(i).getName(),
+					results.get(i).getStatus().getText(),
+					results.get(i).getFriendsCount(),
+					results.get(i).getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
 			System.out.println("Search failed.");
@@ -92,24 +105,24 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method searches Twitter for the requested tweets and updates the
-	 * table model
-	 * 
-	 * @param query
-	 *            the tweets to be searched
+	 * This method searches Twitter for the requested tweets
+	 * and updates the table model.
+	 *
+	 * @param query the tweets to be searched
 	 */
-	public void searchTweets(String query) {
+	public final void searchTweets(final String query) {
 		try {
 			Query toSearch = new Query(query);
 			List<Status> results = engine.search(toSearch).getTweets();
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
-				table.add(new Tweet(results.get(i).getId(), results.get(i)
-						.getCreatedAt(), results.get(i).getUser()
-						.getScreenName(), results.get(i).getUser().getName(),
-						results.get(i).getText(), results.get(i).getUser()
-								.getFriendsCount(), results.get(i).getUser()
-								.getFollowersCount()));
+				table.add(new Tweet(results.get(i).getId(),
+					results.get(i).getCreatedAt(),
+					results.get(i).getUser().getScreenName(),
+					results.get(i).getUser().getName(),
+					results.get(i).getText(),
+					results.get(i).getUser().getFriendsCount(),
+					results.get(i).getUser().getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
 			System.out.println("Search failed.");
@@ -123,34 +136,33 @@ public class TwitterEngine {
 	 */
 
 	/**
-	 * This method follows a selected user requested by the logged in user
-	 * 
-	 * @param ID
-	 *            the selected user to follow
+	 * This method follows a selected user requested by the logged in user.
+	 *
+	 * @param id the selected user to follow
 	 */
-	public void followUser(long ID) {
+	public final void followUser(final long id) {
 		try {
-			engine.createFriendship(ID);
+			engine.createFriendship(id);
 		} catch (TwitterException ex) {
 			System.out.println("Follow unsuccessful.");
 		}
 	}
 
 	/**
-	 * This method returns the table model of the engine
-	 * 
+	 * This method returns the table model of the engine.
+	 *
 	 * @return the table model
 	 */
-	public TableModel getTable() {
+	public final TableModel getTable() {
 		return table;
 	}
 
 	/**
-	 * This method returns the logged in user information to be displayed
-	 * 
+	 * This method returns the logged in user information to be displayed.
+	 *
 	 * @return an array of strings that holds the logged in user information
 	 */
-	public String[] getUserInformation() {
+	public final String[] getUserInformation() {
 		String[] info = new String[4];
 		try {
 			User user = engine.showUser(engine.getId());
@@ -159,13 +171,15 @@ public class TwitterEngine {
 			info[2] = "" + user.getFriendsCount();
 			info[3] = "" + user.getFollowersCount();
 		} catch (Exception ex) {
+			System.out.println(
+				"Failed to accumulate user information.");
 		}
 		return info;
 	}
 
 	/**
-	 * This method allows the logged in user to switch accounts
-	 * 
+	 * This method allows the logged in user to switch accounts.
+	 *
 	 * @param consumerKey
 	 *            the consumerKey of the account to switch to
 	 * @param consumerSecret
@@ -175,23 +189,31 @@ public class TwitterEngine {
 	 * @param accessTokenSecret
 	 *            the accessTokenSecret of the account to switch to
 	 */
-	public void switchAccount(String consumerKey, String consumerSecret,
-			String accessToken, String accessTokenSecret) {
+	public final void switchAccount(final String consumerKey,
+			final String consumerSecret,
+			final String accessToken,
+			final String accessTokenSecret) {
 		try {
 			Properties prop = new Properties();
 
-			prop.setProperty("oauth.consumerKey", consumerKey);
-			prop.setProperty("oauth.consumerSecret", consumerSecret);
-			prop.setProperty("oauth.accessToken", accessToken);
-			prop.setProperty("oauth.accessTokenSecret", accessTokenSecret);
+			prop.setProperty("oauth.consumerKey",
+				consumerKey);
+			prop.setProperty("oauth.consumerSecret",
+				consumerSecret);
+			prop.setProperty("oauth.accessToken",
+				accessToken);
+			prop.setProperty("oauth.accessTokenSecret",
+				accessTokenSecret);
 
-			prop.store(new FileOutputStream("src/twitter4j.properties"), null);
+			prop.store(new FileOutputStream(
+				"src/twitter4j.properties"), null);
 
 			ConfigurationBuilder cb = new ConfigurationBuilder();
-			cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
-					.setOAuthConsumerSecret(consumerSecret)
-					.setOAuthAccessToken(accessToken)
-					.setOAuthAccessTokenSecret(accessTokenSecret);
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(consumerKey)
+				.setOAuthConsumerSecret(consumerSecret)
+				.setOAuthAccessToken(accessToken)
+				.setOAuthAccessTokenSecret(accessTokenSecret);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			engine = tf.getInstance();
 

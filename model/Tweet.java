@@ -1,7 +1,8 @@
 package model;
+
 /**
- * Implements ITweet.  Stores the information of a tweet.
- * 
+ * Stores the information of a tweet.
+ *
  * @author Danny Selgo
  */
 public class Tweet {
@@ -13,20 +14,22 @@ public class Tweet {
 	private String text;
 	private int friendsCount;
 	private int followersCount;
-/**
- * Constructor that stores all of the information into the fields.
- * 
- * @param id - the id of the tweet.
- * @param createdAt - the date and time the tweet was created.
- * @param loginName - the login name of the user who wrote the tweet.
- * @param displayName - the diplay name of the user who wrote the tweet.
- * @param text - the actual text of the tweet.
- * @param friendsCount - the number of friends that the user has.
- * @param followersCount - the number of followers that the user has.
- */
-	public Tweet(long id, java.util.Date createdAt,
-			String loginName, String displayName, String text,
-			int friendsCount, int followersCount) {
+
+	/**
+	 * Constructor that stores all of the information into the fields.
+	 *
+	 * @param id the id of the tweet.
+	 * @param createdAt the date and time the tweet was created.
+	 * @param loginName the login name of the user who wrote the tweet.
+	 * @param displayName the diplay name of the user who wrote the tweet.
+	 * @param text the actual text of the tweet.
+	 * @param friendsCount the number of friends that the user has.
+	 * @param followersCount the number of followers that the user has.
+	 */
+	public Tweet(final long id, final java.util.Date createdAt,
+			final String loginName, final String displayName,
+			final String text, final int friendsCount,
+			final int followersCount) {
 		this.id = id;
 		this.createdAt = createdAt;
 		this.loginName = loginName;
@@ -35,47 +38,67 @@ public class Tweet {
 		this.friendsCount = friendsCount;
 		this.followersCount = followersCount;
 	}
+
 	/**
+	 * Returns id.
+	 *
 	 * @return id
 	 */
-	public long getId() {
+	public final long getId() {
 		return id;
 	}
+
 	/**
+	 * Returns createdAt.
+	 *
 	 * @return createdAt
 	 */
-	public java.util.Date getCreatedAt() {
+	public final java.util.Date getCreatedAt() {
 		return createdAt;
 	}
+
 	/**
+	 * Returns loginName.
+	 *
 	 * @return loginName
 	 */
-	public String getLoginName() {
+	public final String getLoginName() {
 		return loginName;
 	}
+
 	/**
+	 * Returns displayName.
+	 *
 	 * @return displayName
 	 */
-	public String getDisplayName() {
+	public final String getDisplayName() {
 		return displayName;
 	}
+
 	/**
+	 * Returns text.
+	 *
 	 * @return text
 	 */
-	public String getText() {
+	public final String getText() {
 		return text;
 	}
+
 	/**
+	 * Returns friendsCount.
+	 *
 	 * @return friendsCount
 	 */
-	public int getFriendsCount() {
+	public final int getFriendsCount() {
 		return friendsCount;
 	}
+
 	/**
+	 * Returns followersCount.
+	 *
 	 * @return followersCount
 	 */
-	public int getFollowersCount() {
+	public final int getFollowersCount() {
 		return followersCount;
 	}
 }
-
