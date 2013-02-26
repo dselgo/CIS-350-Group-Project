@@ -129,11 +129,45 @@ public class TwitterEngine {
 		}
 	}
 
-	/*
-	 * public void followUser(String screenName) { try {
-	 * engine.createFriendship(screenName); } catch (TwitterException ex) {
-	 * System.out.println("Follow unsuccessful."); } }
+	/**
+	 * This method updates the table model with the most recent
+	 * tweets of the current user logged in.
 	 */
+	public final void showTimeLine() {
+		try {
+			ResponseList<Status> results =
+				engine.getUserTimeline();
+			table.clear();
+			for (int i = 0; i < results.size(); i++) {
+				table.add(new Tweet(results.get(i).getId(),
+						results.get(i).getCreatedAt(),
+						results.get(i).getUser().getScreenName(),
+						results.get(i).getUser().getName(),
+						results.get(i).getText(),
+						results.get(i).getUser().getFriendsCount(),
+						results.get(i).getUser().getFollowersCount()));
+			}
+		} catch (TwitterException ex) {
+			System.out.println("Search failed.");
+		}
+	}
+	
+	/**
+	 * This method deletes a selected tweet. The tweet selected
+	 * must be a owned by the authenticated user.
+	 * @param sID the id of the tweet to delete
+	 */
+	
+	public final void deleteTweet(final long sID) {
+		try {
+			Status result = engine.destroyStatus(sID);
+			//table.remove(tweet);
+			// or just clear table?
+		} catch (TwitterException ex) {
+			System.out.println("Retweet failed.");
+		}
+	}
+	
 
 	/**
 	 * This method follows a selected user requested by the logged in user.
@@ -163,13 +197,14 @@ public class TwitterEngine {
 	 * @return an array of strings that holds the logged in user information
 	 */
 	public final String[] getUserInformation() {
-		String[] info = new String[4];
+		String[] info = new String[5];
 		try {
 			User user = engine.showUser(engine.getId());
 			info[0] = user.getName();
 			info[1] = user.getScreenName();
 			info[2] = "" + user.getFriendsCount();
 			info[3] = "" + user.getFollowersCount();
+			info[4] = "" + user.getStatusesCount();
 		} catch (Exception ex) {
 			System.out.println(
 				"Failed to accumulate user information.");
