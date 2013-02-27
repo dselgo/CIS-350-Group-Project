@@ -163,8 +163,10 @@ public class TwitterEngine {
 			Status result = engine.destroyStatus(sID);
 			//table.remove(tweet);
 			// or just clear table?
+                        showTimeLine();
+                        
 		} catch (TwitterException ex) {
-			System.out.println("Retweet failed.");
+			System.out.println("Delete failed.");
 		}
 	}
 	
