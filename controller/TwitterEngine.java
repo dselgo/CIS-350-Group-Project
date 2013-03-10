@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Properties;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import twitter4j.Category;
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -14,6 +16,8 @@ import twitter4j.Query;
 import twitter4j.conf.ConfigurationBuilder;
 import model.Tweet;
 import model.TableModel;
+import model.TrendModel;
+import model.UserModel;
 
 
 /**
@@ -25,6 +29,8 @@ public class TwitterEngine {
 
 	private Twitter engine;
 	private TableModel table;
+	private TrendModel trendList;
+	private UserModel userList;
 
 	/**
 	 * Constructor for the TwitterEngine class - uses the
@@ -183,6 +189,25 @@ public class TwitterEngine {
 			System.out.println("Follow unsuccessful.");
 		}
 	}
+	
+	public void generateSuggestedUsers(){
+		try{
+			ResponseList<Category> categories = engine.getSuggestedUserCategories();
+			ResponseList<User> users = engine.getUserSuggestions(categories.get(0).getSlug());
+			userList = new UserModel(users);
+		} catch (Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void generateTrendingTopics(){
+		try{
+			Trends trends = engine.getPlaceTrends(1);
+			trendList = new TrendModel(trends);
+		} catch (Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
 
 	/**
 	 * This method returns the table model of the engine.
@@ -192,7 +217,15 @@ public class TwitterEngine {
 	public final TableModel getTable() {
 		return table;
 	}
+	
+	public TrendModel getTrends(){
+		return trendList;
+	}
 
+	public UserModel getUsers(){
+		return userList;
+	}
+	
 	/**
 	 * This method returns the logged in user information to be displayed.
 	 *
