@@ -59,7 +59,7 @@ public class TwitterEngine {
 				result.getUser().getFriendsCount(),
 				result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
-			System.out.println("Tweet failed.");
+			throw new RuntimeException("Failed to update status: " + ex.getMessage());
 		}
 	}
 
@@ -81,7 +81,7 @@ public class TwitterEngine {
 				result.getUser().getFriendsCount(),
 				result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
-			System.out.println("Retweet failed.");
+			throw new RuntimeException("Failed to retweet: " + ex.getMessage());
 		}
 	}
 
@@ -106,7 +106,7 @@ public class TwitterEngine {
 					results.get(i).getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
-			System.out.println("Search failed.");
+			throw new RuntimeException("Search failed: " + ex.getMessage());
 		}
 	}
 
@@ -131,7 +131,7 @@ public class TwitterEngine {
 					results.get(i).getUser().getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
-			System.out.println("Search failed.");
+			throw new RuntimeException("Search failed: " + ex.getMessage());
 		}
 	}
 
@@ -154,7 +154,7 @@ public class TwitterEngine {
 						results.get(i).getUser().getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
-			System.out.println("Search failed.");
+			throw new RuntimeException("Failed to find user timeline: " + ex.getMessage());
 		}
 	}
 	
@@ -172,7 +172,7 @@ public class TwitterEngine {
                         showTimeLine();
                         
 		} catch (TwitterException ex) {
-			System.out.println("Delete failed.");
+			throw new RuntimeException("Failed to delete tweet: " + ex.getMessage());
 		}
 	}
 	
@@ -186,26 +186,26 @@ public class TwitterEngine {
 		try {
 			engine.createFriendship(id);
 		} catch (TwitterException ex) {
-			System.out.println("Follow unsuccessful.");
+			throw new RuntimeException("Failed to follow: " + ex.getMessage());
 		}
 	}
 	
-	public void generateSuggestedUsers(){
-		try{
+	public UserModel generateSuggestedUsers() {
+		try {
 			ResponseList<Category> categories = engine.getSuggestedUserCategories();
 			ResponseList<User> users = engine.getUserSuggestions(categories.get(0).getSlug());
-			userList = new UserModel(users);
-		} catch (Exception ex){
-			System.out.println(ex.getMessage());
+			return new UserModel(users);
+		} catch (TwitterException ex){
+			throw new RuntimeException("Failed to generate suggested users to follow: " + ex.getMessage());
 		}
 	}
 	
-	public void generateTrendingTopics(){
+	public TrendModel generateTrendingTopics() {
 		try{
 			Trends trends = engine.getPlaceTrends(1);
-			trendList = new TrendModel(trends);
-		} catch (Exception ex){
-			System.out.println(ex.getMessage());
+			return new TrendModel(trends);
+		} catch (TwitterException ex){
+			throw new RuntimeException("Failed to generate trending topics: " + ex.getMessage());
 		}
 	}
 
@@ -240,9 +240,8 @@ public class TwitterEngine {
 			info[2] = "" + user.getFriendsCount();
 			info[3] = "" + user.getFollowersCount();
 			info[4] = "" + user.getStatusesCount();
-		} catch (Exception ex) {
-			System.out.println(
-				"Failed to accumulate user information.");
+		} catch (TwitterException ex) {
+			throw new RuntimeException("Failed to accumulate user information: " + ex.getMessage());
 		}
 		return info;
 	}
@@ -288,7 +287,9 @@ public class TwitterEngine {
 			engine = tf.getInstance();
 
 		} catch (IOException ex) {
-			System.out.println("Write to .properties file failed");
+			throw new RuntimeException("Failed to write to .properties file: " + ex.getMessage());
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to switch account: " + ex.getMessage());
 		}
 	}
 }
