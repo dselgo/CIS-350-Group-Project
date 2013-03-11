@@ -158,10 +158,10 @@ public class TwitterEngine {
 		}
 	}
 	
-	public void showTimeLine(User user) {
+	public void showTimeLine(String screenName) {
 		try {
 			ResponseList<Status> results =
-					engine.getUserTimeline(user.getId());
+					engine.getUserTimeline(screenName);
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
 				table.add(new Tweet(results.get(i).getId(),
