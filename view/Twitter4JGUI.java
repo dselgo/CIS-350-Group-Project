@@ -34,6 +34,18 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        switchAccountDialog = new javax.swing.JDialog();
+        switchAccountPanel = new javax.swing.JPanel();
+        switchAccountPromptLabel = new javax.swing.JLabel();
+        consumerKeyLabel = new javax.swing.JLabel();
+        consumerSecretLabel = new javax.swing.JLabel();
+        accessTokenLabel = new javax.swing.JLabel();
+        accessTokenSecretLabel = new javax.swing.JLabel();
+        consumerKeyTextField = new javax.swing.JTextField();
+        consumerSecretTextField = new javax.swing.JTextField();
+        accessTokenTextField = new javax.swing.JTextField();
+        accessTokenSecretTextField = new javax.swing.JTextField();
+        switchAccountDialogButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         mainTabPane = new javax.swing.JTabbedPane();
         createTweetPanel = new javax.swing.JPanel();
@@ -83,6 +95,108 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         quitMenuItem = new javax.swing.JMenuItem();
         helpMenuBar = new javax.swing.JMenu();
         getHelpMenuItem = new javax.swing.JMenuItem();
+
+        switchAccountDialog.setMinimumSize(new java.awt.Dimension(400, 275));
+        switchAccountDialog.setResizable(false);
+
+        switchAccountPromptLabel.setText("Please enter the following information to switch accounts:");
+
+        consumerKeyLabel.setText("Consumer Key:");
+
+        consumerSecretLabel.setText("Consumer Secret:");
+
+        accessTokenLabel.setText("Access Token:");
+
+        accessTokenSecretLabel.setText("Access Token Secret:");
+
+        consumerKeyTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consumerKeyTextFieldActionPerformed(evt);
+            }
+        });
+
+        accessTokenTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accessTokenTextFieldActionPerformed(evt);
+            }
+        });
+
+        switchAccountDialogButton.setText("OK");
+        switchAccountDialogButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                switchAccountDialogButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout switchAccountPanelLayout = new javax.swing.GroupLayout(switchAccountPanel);
+        switchAccountPanel.setLayout(switchAccountPanelLayout);
+        switchAccountPanelLayout.setHorizontalGroup(
+            switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(switchAccountPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(switchAccountPanelLayout.createSequentialGroup()
+                        .addComponent(switchAccountPromptLabel)
+                        .addGap(0, 84, Short.MAX_VALUE))
+                    .addGroup(switchAccountPanelLayout.createSequentialGroup()
+                        .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(accessTokenSecretLabel)
+                            .addComponent(accessTokenLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(consumerSecretLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(consumerKeyLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(consumerKeyTextField)
+                            .addComponent(consumerSecretTextField)
+                            .addComponent(accessTokenTextField)
+                            .addComponent(accessTokenSecretTextField))))
+                .addContainerGap())
+            .addGroup(switchAccountPanelLayout.createSequentialGroup()
+                .addGap(176, 176, 176)
+                .addComponent(switchAccountDialogButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        switchAccountPanelLayout.setVerticalGroup(
+            switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(switchAccountPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(switchAccountPromptLabel)
+                .addGap(18, 18, 18)
+                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(consumerKeyLabel)
+                    .addComponent(consumerKeyTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(consumerSecretLabel)
+                    .addComponent(consumerSecretTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accessTokenLabel)
+                    .addComponent(accessTokenTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accessTokenSecretLabel)
+                    .addComponent(accessTokenSecretTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(switchAccountDialogButton))
+        );
+
+        javax.swing.GroupLayout switchAccountDialogLayout = new javax.swing.GroupLayout(switchAccountDialog.getContentPane());
+        switchAccountDialog.getContentPane().setLayout(switchAccountDialogLayout);
+        switchAccountDialogLayout.setHorizontalGroup(
+            switchAccountDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, switchAccountDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(switchAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        switchAccountDialogLayout.setVerticalGroup(
+            switchAccountDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, switchAccountDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(switchAccountPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Twitter Desktop Application");
@@ -572,7 +686,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 engine.deleteTweet(sid);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Delete failed.");
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -584,15 +698,19 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 engine.retweet(sid);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Retweet failed.");
         }
     }//GEN-LAST:event_retweetButtonActionPerformed
 
     private void followButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followButtonActionPerformed
-        int index = tweetTable.getSelectedRow();
-        if (index != -1){
-            long id = engine.getTable().get(index).getId();
-            engine.followUser(id);
+        try{
+            int index = tweetTable.getSelectedRow();
+            if (index != -1){
+                long id = engine.getTable().get(index).getId();
+                engine.followUser(id);
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Follow failed.");
         }
     }//GEN-LAST:event_followButtonActionPerformed
 
@@ -605,51 +723,87 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tweetTableMouseClicked
 
     private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
-        String consumerKey = JOptionPane.showInputDialog("Please enter your consumer key:");
-        String consumerSecret = JOptionPane.showInputDialog("Please enter your consumer secret:");
-        String accessToken = JOptionPane.showInputDialog("Please enter your access token:");
-        String accessTokenSecret = JOptionPane.showInputDialog("Please enter your access token secret:");
-        engine.switchAccount(consumerKey, consumerSecret, accessToken, accessTokenSecret);
-        updateUserInformation();
+        switchAccountDialog.setVisible(true);
     }//GEN-LAST:event_switchAccountButtonActionPerformed
 
     private void searchTopicsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTopicsButtonActionPerformed
-        engine.searchTweets(searchTopicTextField.getText());
+        try {
+            engine.searchTweets(searchTopicTextField.getText());
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Search topics failed.");
+        }
     }//GEN-LAST:event_searchTopicsButtonActionPerformed
 
     private void searchTopicTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTopicTextFieldActionPerformed
-        engine.searchTweets(searchTopicTextField.getText());
+        try{
+            engine.searchTweets(searchTopicTextField.getText());
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Search topics failed.");
+        }
     }//GEN-LAST:event_searchTopicTextFieldActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        engine.updateStatus(enterTweetTextArea.getText());
+        try {
+            engine.updateStatus(enterTweetTextArea.getText());
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Update status failed.");
+        }
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void searchPeopleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPeopleTextFieldActionPerformed
-        engine.searchPeople(searchPeopleTextField.getText());
+        try{
+            engine.searchPeople(searchPeopleTextField.getText());
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Search people failed.");
+        }
     }//GEN-LAST:event_searchPeopleTextFieldActionPerformed
 
     private void searchPeopleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPeopleButtonActionPerformed
-        engine.searchPeople(searchPeopleTextField.getText());
+        try{
+            engine.searchPeople(searchPeopleTextField.getText());
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Search people failed.");
+        }
     }//GEN-LAST:event_searchPeopleButtonActionPerformed
 
     private void timelineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timelineButtonActionPerformed
-        engine.showTimeLine();
+        try{
+            engine.showTimeLine();
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Updating timeline failed.");
+        }
     }//GEN-LAST:event_timelineButtonActionPerformed
+
+    private void consumerKeyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumerKeyTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_consumerKeyTextFieldActionPerformed
+
+    private void accessTokenTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessTokenTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_accessTokenTextFieldActionPerformed
+
+    private void switchAccountDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountDialogButtonActionPerformed
+        try{
+            String consumerKey = consumerKeyTextField.getText();
+            String consumerSecret = consumerSecretTextField.getText();
+            String accessToken = accessTokenTextField.getText();
+            String accessTokenSecret = accessTokenSecretTextField.getText();
+            engine.switchAccount(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+            updateUserInformation();
+            switchAccountDialog.setVisible(false);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Switch account failed.");
+        }
+    }//GEN-LAST:event_switchAccountDialogButtonActionPerformed
     
     private void updateUserInformation(){
         nameLabelContent.setText(engine.getUserInformation()[0]);
         displayNameLabelContent.setText(engine.getUserInformation()[1]);
         followingLabelContent.setText(engine.getUserInformation()[2]);
         followersLabelContent.setText(engine.getUserInformation()[3]);
+        tweetContentLabel.setText(engine.getUserInformation()[4]);
     }
-    /*private void tableMouseClicked() {
-		int index = tweetTable.getSelectedRow();
-		if (index != -1) {
-			Tweet t = engine.getTable().get(index);
-			displayTweetText.setText(t.getText());
-		}
-	}*/
+
     /**
      * @param args the command line arguments
      */
@@ -689,6 +843,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel accessTokenLabel;
+    private javax.swing.JLabel accessTokenSecretLabel;
+    private javax.swing.JTextField accessTokenSecretTextField;
+    private javax.swing.JTextField accessTokenTextField;
+    private javax.swing.JLabel consumerKeyLabel;
+    private javax.swing.JTextField consumerKeyTextField;
+    private javax.swing.JLabel consumerSecretLabel;
+    private javax.swing.JTextField consumerSecretTextField;
     private javax.swing.JPanel createTweetPanel;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel displayNameLabelContent;
@@ -725,6 +887,10 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchTopicsButton;
     private javax.swing.JPanel searchTopicsPanel;
     private javax.swing.JButton switchAccountButton;
+    private javax.swing.JDialog switchAccountDialog;
+    private javax.swing.JButton switchAccountDialogButton;
+    private javax.swing.JPanel switchAccountPanel;
+    private javax.swing.JLabel switchAccountPromptLabel;
     private javax.swing.JButton timelineButton;
     private javax.swing.JLabel trendLabel;
     private javax.swing.JPanel trendsFollowersPanel;
