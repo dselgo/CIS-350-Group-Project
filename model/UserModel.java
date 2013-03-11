@@ -16,7 +16,7 @@ public class UserModel extends AbstractListModel{
 		return users.size();
 	}
 	
-	public User getElementAt(int index) {
-		return users.get(index);
+	public String getElementAt(int index) {
+		return users.get(index).getName();
 	}
 }

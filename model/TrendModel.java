@@ -16,7 +16,7 @@ public class TrendModel extends AbstractListModel{
 		return trends.length;
 	}
 	
-	public Trend getElementAt(int index) {
-		return trends[index];
+	public String getElementAt(int index) {
+		return trends[index].getName();
 	}
 }
