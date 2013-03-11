@@ -158,6 +158,25 @@ public class TwitterEngine {
 		}
 	}
 	
+	public void showTimeLine(User user) {
+		try {
+			ResponseList<Status> results =
+					engine.getUserTimeline(user.getId());
+			table.clear();
+			for (int i = 0; i < results.size(); i++) {
+				table.add(new Tweet(results.get(i).getId(),
+						results.get(i).getCreatedAt(),
+						results.get(i).getUser().getScreenName(),
+						results.get(i).getUser().getName(),
+						results.get(i).getText(),
+						results.get(i).getUser().getFriendsCount(),
+						results.get(i).getUser().getFollowersCount()));
+			}
+		} catch (TwitterException ex) {
+			throw new RuntimeException("Failed to find user timeline: " + ex.getMessage());
+		}
+	}
+	
 	/**
 	 * This method deletes a selected tweet. The tweet selected
 	 * must be a owned by the authenticated user.
