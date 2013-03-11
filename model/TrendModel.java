@@ -8,7 +8,7 @@ public class TrendModel extends AbstractListModel{
 	
 	private Trend[] trends;
 	
-	public TrendModel (Trends trends) {
+	public TrendModel(Trends trends)	{
 		this.trends = trends.getTrends();
 	}
 	

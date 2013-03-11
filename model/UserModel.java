@@ -17,6 +17,6 @@ public class UserModel extends AbstractListModel{
 	}
 	
 	public String getElementAt(int index) {
-		return users.get(index).getName();
+		return users.get(index).getScreenName();
 	}
 }

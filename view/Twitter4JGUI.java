@@ -86,9 +86,10 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         trendLabel = new javax.swing.JLabel();
         followerLabel = new javax.swing.JLabel();
         trendsListScrollPane = new javax.swing.JScrollPane();
-        trendsList = new javax.swing.JList();
+        trendsList = new JList(engine.generateTrendingTopics());
         followersListScrollPane = new javax.swing.JScrollPane();
-        followersList = new javax.swing.JList();
+        followersList = new JList(engine.generateSuggestedUsers())
+        ;
         menubar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         refreshMenuItem = new javax.swing.JMenuItem();
@@ -479,7 +480,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             }
         });
 
-        tweetTable.setModel(engine.getTable());
         tweetTable.getTableHeader().setReorderingAllowed(false);
         tweetTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -528,18 +528,18 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         followerLabel.setText("WHO TO FOLLOW");
 
         trendsList.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        trendsList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        trendsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                trendsListMouseClicked(evt);
+            }
         });
         trendsListScrollPane.setViewportView(trendsList);
 
         followersList.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followersList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        followersList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                followersListMouseClicked(evt);
+            }
         });
         followersListScrollPane.setViewportView(followersList);
 
@@ -686,7 +686,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 engine.deleteTweet(sid);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Delete failed.");
+            JOptionPane.showMessageDialog(null, "Delete failed. Please try again.");
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -698,7 +698,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 engine.retweet(sid);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Retweet failed.");
+            JOptionPane.showMessageDialog(null, "Retweet failed. Please try again.");
         }
     }//GEN-LAST:event_retweetButtonActionPerformed
 
@@ -710,7 +710,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 engine.followUser(id);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Follow failed.");
+            JOptionPane.showMessageDialog(null, "Follow failed. Please try again.");
         }
     }//GEN-LAST:event_followButtonActionPerformed
 
@@ -730,7 +730,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         try {
             engine.searchTweets(searchTopicTextField.getText());
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Search topics failed.");
+            JOptionPane.showMessageDialog(null, "Search topics failed. Please try again.");
         }
     }//GEN-LAST:event_searchTopicsButtonActionPerformed
 
@@ -738,15 +738,16 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         try{
             engine.searchTweets(searchTopicTextField.getText());
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Search topics failed.");
+            JOptionPane.showMessageDialog(null, "Search topics failed. Please try again.");
         }
     }//GEN-LAST:event_searchTopicTextFieldActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         try {
             engine.updateStatus(enterTweetTextArea.getText());
+            enterTweetTextArea.setText(null);
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Update status failed.");
+            JOptionPane.showMessageDialog(null, "Update status failed. Please try again.");
         }
     }//GEN-LAST:event_updateButtonActionPerformed
 
@@ -754,7 +755,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         try{
             engine.searchPeople(searchPeopleTextField.getText());
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Search people failed.");
+            JOptionPane.showMessageDialog(null, "Search people failed. Please try again.");
         }
     }//GEN-LAST:event_searchPeopleTextFieldActionPerformed
 
@@ -762,7 +763,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         try{
             engine.searchPeople(searchPeopleTextField.getText());
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Search people failed.");
+            JOptionPane.showMessageDialog(null, "Search people failed. Please try again.");
         }
     }//GEN-LAST:event_searchPeopleButtonActionPerformed
 
@@ -770,7 +771,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         try{
             engine.showTimeLine();
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Updating timeline failed.");
+            JOptionPane.showMessageDialog(null, "Updating timeline failed. Please try again.");
         }
     }//GEN-LAST:event_timelineButtonActionPerformed
 
@@ -792,9 +793,23 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             updateUserInformation();
             switchAccountDialog.setVisible(false);
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Switch account failed.");
+            displayError(ex);
         }
     }//GEN-LAST:event_switchAccountDialogButtonActionPerformed
+
+    private void trendsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trendsListMouseClicked
+        int index = trendsList.getSelectedIndex();
+        if (index != -1) {
+            engine.searchTweets(engine.getTrends().getElementAt(index));
+        }
+    }//GEN-LAST:event_trendsListMouseClicked
+
+    private void followersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_followersListMouseClicked
+        int index = followersList.getSelectedIndex();
+        if (index != -1) {
+            engine.showTimeLine(engine.getUsers().getElementAt(index));
+        }
+    }//GEN-LAST:event_followersListMouseClicked
     
     private void updateUserInformation(){
         nameLabelContent.setText(engine.getUserInformation()[0]);
@@ -802,6 +817,10 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         followingLabelContent.setText(engine.getUserInformation()[2]);
         followersLabelContent.setText(engine.getUserInformation()[3]);
         tweetContentLabel.setText(engine.getUserInformation()[4]);
+    }
+    
+    private void displayError(Exception ex){
+        JOptionPane.showMessageDialog(null, ex.getMessage(), "Twitter4J Error", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -834,11 +853,11 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
+                //try {
                     new Twitter4JGUI().setVisible(true);
-                } catch (Exception e){
-                    JOptionPane.showMessageDialog(null, "An error has occurred.");
-                }
+                //} catch (Exception e){
+                  //  JOptionPane.showMessageDialog(null, "An error has occurred.");
+                //}
             }
         });
     }
