@@ -4,6 +4,7 @@
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="switchAccountDialog">
       <Properties>
+        <Property name="title" type="java.lang.String" value="Switch Account"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[400, 275]"/>
         </Property>
@@ -151,6 +152,674 @@
         </Container>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JFrame" name="helpFrame">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Help"/>
+        <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
+          <Rectangle value="[0, 0, 0, 0]"/>
+        </Property>
+        <Property name="resizable" type="boolean" value="false"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="closePanel" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Component id="helpScrollPane" alignment="0" pref="378" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="531" max="32767" attributes="0"/>
+                  <Component id="closePanel" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="helpScrollPane" min="-2" pref="519" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="closePanel">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
+                      <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="159" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="closeButton" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="closeButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Close"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeButtonActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JScrollPane" name="helpScrollPane">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="mainHelpPanel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="f0" green="f0" red="0" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="timelineLine1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="timelineLine2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="timelineLine3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="timelineLine4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="timelineLine5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="timelineLine6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="timelineHeading" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserHeading" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserLine1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserLine2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserLine3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserLine4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserLine5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchUserLine6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicHeading" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine8" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine9" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchTopicLine7" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetHeading" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followHeading" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine7" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine8" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine9" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine10" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="followLine11" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createTweetHeading" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createTweetLine3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createTweetLine4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createTweetLine5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createTweetLine1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="createTweetLine2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="retweetLine7" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createTweetHeading" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createTweetLine1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createTweetLine2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createTweetLine3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createTweetLine4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="createTweetLine5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="timelineHeading" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="timelineLine1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="timelineLine2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="timelineLine3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="timelineLine4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="timelineLine5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="timelineLine6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="searchUserHeading" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchUserLine1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchUserLine2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchUserLine3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchUserLine4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchUserLine5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchUserLine6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="searchTopicHeading" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine7" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="searchTopicLine9" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="retweetHeading" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="retweetLine7" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="followHeading" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine7" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine9" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="followLine11" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="timelineLine1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Click the &quot;Show My Timeline&quot; button located in"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="timelineLine2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="the middle of the screen. This will display"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="timelineLine3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="your timeline in the table at the bottom of the"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="timelineLine4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="window. From the table, you can click on any"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="timelineLine5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="row and the content of your tweet will appear"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="timelineLine6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="in the white area above the table"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="timelineHeading">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="24" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="How to View Your Timeline"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserHeading">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="24" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="How to Search For Users"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserLine1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="First, click on the &quot;Search People&quot; tab located"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserLine2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="near the top of the window. In the white space,"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserLine3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="type the name of the person you would like to"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserLine4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="search and hit &lt;Enter&gt; or click the button"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserLine5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="&quot;Search People&quot;. A list of users will be displayed"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchUserLine6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="in the table at the bottom. "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicHeading">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="24" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="How to Search For Topics"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="First, click on the &quot;Search Topics&quot; tab located"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="near the top of the window. In the white space,"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="type the topic you would like to search and "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="hit &lt;Enter&gt; or click the button &quot;Search Topics&quot;."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine8">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="topic will be displayed in the table at the"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine9">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="bottom."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetHeading">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="24" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="How to Retweet"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="First, search for a topic or user to get a list of"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tweets displayed in the table at the bottom of"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="the window. Click on the Login Name of the "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tweet to highlight it, then click the &quot;Retweet&quot;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="button located above the table. The Tweet that"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="you retweeted will now be displayed in the"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followHeading">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="24" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="How to Follow Users"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="First, search for a topic or user to get a list of"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tweets displayed in the table at the bottom of"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="the window. Click on the Login Name of the a"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tweet to highlight it, then click the &quot;Follow&quot;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="button located above the table. You can also"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="click on the name of a user from the Suggested"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine7">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Users list located in the bottom right corner of the"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine8">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="window. It will display that user&apos;s timeline. You"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine9">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="can then click on any Tweet and click the &quot;Follow&quot; "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine10">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="button. A window will appear confirming that "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="followLine11">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="you have followed a user."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="You can also click on one of the Trending Topics"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine6">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="from the list located in the upper right corner"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="searchTopicLine7">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="of the window. A list of Tweets related to that"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createTweetHeading">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="24" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="How to Create a Tweet"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createTweetLine1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Click the &quot;Compose a Tweet&quot; tab at the top of the"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createTweetLine2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="window. Type what you want your Tweet to say"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createTweetLine3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="in the white space and then hit &lt;Enter&gt; or click"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createTweetLine4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="the &quot;Update&quot; button. You window will appear"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createTweetLine5">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="confirming that you created a new Tweet."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="retweetLine7">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Aharoni" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="table."/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="menubar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
@@ -162,6 +831,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Refresh"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="quitMenuItem">
               <Properties>
@@ -887,14 +1559,14 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="trendsListScrollPane" max="32767" attributes="0"/>
-                  <Component id="followersListScrollPane" alignment="0" max="32767" attributes="0"/>
+                  <Component id="trendsListScrollPane" pref="0" max="32767" attributes="0"/>
+                  <Component id="followersListScrollPane" alignment="0" pref="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="trendLabel" min="-2" max="-2" attributes="0"/>
                           <Component id="followerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="85" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
