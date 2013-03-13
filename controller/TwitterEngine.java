@@ -74,6 +74,9 @@ public class TwitterEngine {
 	 */
 	public final void retweet(final long sID) {
 		try {
+			if(sID == 0) {
+				throw new IllegalArgumentException("Unable to retweet this status.");
+			}
 			Status result = engine.retweetStatus(sID);
 			table.clear();
 			table.add(new Tweet(result.getId(),
@@ -84,6 +87,8 @@ public class TwitterEngine {
 				result.getUser().getFriendsCount(),
 				result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
+			throw new RuntimeException("Failed to retweet: " + ex.getMessage());
+		} catch (IllegalArgumentException ex) {
 			throw new RuntimeException("Failed to retweet: " + ex.getMessage());
 		}
 	}
@@ -101,13 +106,23 @@ public class TwitterEngine {
 				engine.searchUsers(query, 1);
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
-				table.add(new Tweet(results.get(i).getId(),
-					results.get(i).getCreatedAt(),
-					results.get(i).getScreenName(),
-					results.get(i).getName(),
-					results.get(i).getStatus().getText(),
-					results.get(i).getFriendsCount(),
-					results.get(i).getFollowersCount()));
+				if(results.get(i).getStatus() == null){
+					table.add(new Tweet(0,
+							null,
+							results.get(i).getScreenName(),
+							results.get(i).getName(),
+							"",
+							results.get(i).getFriendsCount(),
+							results.get(i).getFollowersCount()));
+				} else {
+					table.add(new Tweet(results.get(i).getStatus().getId(),
+							results.get(i).getStatus().getCreatedAt(),
+							results.get(i).getScreenName(),
+							results.get(i).getName(),
+							results.get(i).getStatus().getText(),
+							results.get(i).getFriendsCount(),
+							results.get(i).getFollowersCount()));
+				}
 			}
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Search failed: " + ex.getMessage());
@@ -217,9 +232,9 @@ public class TwitterEngine {
 	 * @param id the selected user to follow
 	 * @throws RunTimeException if Twitter fails to follow the user.
 	 */
-	public final void followUser(final long id) {
+	public final void followUser(final String screenName) {
 		try {
-			engine.createFriendship(id);
+			engine.createFriendship(screenName);
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Failed to follow: " + ex.getMessage());
 		}

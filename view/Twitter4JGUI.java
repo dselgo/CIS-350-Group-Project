@@ -1146,7 +1146,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         try{
             int index = tweetTable.getSelectedRow();
             if (index != -1){
-                long id = engine.getTable().get(index).getId();
+                String id = engine.getTable().get(index).getLoginName();
                 engine.followUser(id);
                 JOptionPane.showMessageDialog(null, "You have successfully followed a new user.");
             } else {
