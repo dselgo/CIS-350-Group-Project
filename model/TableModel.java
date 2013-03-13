@@ -4,10 +4,11 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 /**
- * This class stores all of the information gathered from the controller. The
+ * This class stores all of the tweets gathered from the controller. The
  * class extends the AbstractTableModel class so that we may display the
- * information on the JTable in the GUI.
+ * information on a JTable in the GUI.
  *
+ * @version 2.0
  * @author Danny Selgo
  */
 public class TableModel extends AbstractTableModel {

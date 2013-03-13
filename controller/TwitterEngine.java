@@ -23,7 +23,8 @@ import model.UserModel;
 /**
  * This class represents the engine that connects to the Twitter Service.
  *
- * @author Cameron Ohrt
+ * @version 2.0
+ * @authors Cameron Ohrt & Danny Selgo
  */
 public class TwitterEngine {
 
@@ -45,7 +46,8 @@ public class TwitterEngine {
 	 * This method updates the status of the current user
 	 * and modifies the table model.
 	 *
-	 * @param status the status to be posted
+	 * @param status the status to be posted.
+	 * @throws RunTimeException if Twitter fails to update the status.
 	 */
 	public final void updateStatus(final String status) {
 		try {
@@ -67,7 +69,8 @@ public class TwitterEngine {
 	 * This method retweets a status selected by the user
 	 * and modifies the table model.
 	 *
-	 * @param sID the status to be retweeted
+	 * @param sID the status to be retweeted.
+	 * @throws RunTimeException if Twitter fails to retweet the status.
 	 */
 	public final void retweet(final long sID) {
 		try {
@@ -89,7 +92,8 @@ public class TwitterEngine {
 	 * This method searches Twitter for the requested users
 	 * and updates the table model.
 	 *
-	 * @param query the users to be searched
+	 * @param query the users to be searched.
+	 * @throws RunTimeException if Twitter fails to search for the user.
 	 */
 	public final void searchPeople(final String query) {
 		try {
@@ -114,7 +118,8 @@ public class TwitterEngine {
 	 * This method searches Twitter for the requested tweets
 	 * and updates the table model.
 	 *
-	 * @param query the tweets to be searched
+	 * @param query the tweets to be searched.
+	 * @throws RunTimeException if Twitter fails search for tweets.
 	 */
 	public final void searchTweets(final String query) {
 		try {
@@ -138,6 +143,8 @@ public class TwitterEngine {
 	/**
 	 * This method updates the table model with the most recent
 	 * tweets of the current user logged in.
+	 * 
+	 * @throws RunTimeException if Twitter fails to show the users timeline.
 	 */
 	public final void showTimeLine() {
 		try {
@@ -158,6 +165,13 @@ public class TwitterEngine {
 		}
 	}
 	
+	/**
+	 * This method updates the table model with the most recent
+	 * tweets of the user with the given screenName.
+	 * 
+	 * @param screen name of the desired timeline.
+	 * @throws RunTimeException if Twitter fails to show the desired timeline.
+	 */
 	public void showTimeLine(String screenName) {
 		try {
 			ResponseList<Status> results =
@@ -179,10 +193,11 @@ public class TwitterEngine {
 	
 	/**
 	 * This method deletes a selected tweet. The tweet selected
-	 * must be a owned by the authenticated user.
-	 * @param sID the id of the tweet to delete
+	 * must be owned by the authenticated user.
+	 * 
+	 * @param sID the id of the tweet to delete.
+	 * @throws RunTimeException if Twitter fails to delete the tweet.
 	 */
-	
 	public final void deleteTweet(final long sID) {
 		try {
 			Status result = engine.destroyStatus(sID);
@@ -200,6 +215,7 @@ public class TwitterEngine {
 	 * This method follows a selected user requested by the logged in user.
 	 *
 	 * @param id the selected user to follow
+	 * @throws RunTimeException if Twitter fails to follow the user.
 	 */
 	public final void followUser(final long id) {
 		try {
@@ -209,6 +225,13 @@ public class TwitterEngine {
 		}
 	}
 	
+	/**
+	 * Generates a list of users that Twitter suggests you follow.  
+	 * Adds this list to the UserModel.
+	 * 
+	 * @return userList - the current UserModel.
+	 * @throws RunTimeException if Twitter fails to generate a who to follow list.
+	 */
 	public UserModel generateSuggestedUsers() {
 		try {
 			ResponseList<Category> categories = engine.getSuggestedUserCategories();
@@ -220,6 +243,13 @@ public class TwitterEngine {
 		}
 	}
 	
+	/**
+	 * Generates a list of current worldwide trending topics.  
+	 * Adds this list to the TrendModel.
+	 * 
+	 * @return trendList - the current TrendModel.
+	 * @throws RunTimeException if Twitter generate a trending topics list.
+	 */
 	public TrendModel generateTrendingTopics() {
 		try{
 			Trends trends = engine.getPlaceTrends(1);
@@ -231,18 +261,28 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method returns the table model of the engine.
+	 * This method returns the current TableModel.
 	 *
-	 * @return the table model
+	 * @return table - the current TableModel.
 	 */
 	public final TableModel getTable() {
 		return table;
 	}
 	
+	/**
+	 * This method returns the current TrendModel.
+	 *
+	 * @return trendList - the current TrendModel.
+	 */
 	public TrendModel getTrends(){
 		return trendList;
 	}
 
+	/**
+	 * This method returns the current UserModel.
+	 *
+	 * @return userList - the current UserModel.
+	 */
 	public UserModel getUsers(){
 		return userList;
 	}
@@ -250,7 +290,8 @@ public class TwitterEngine {
 	/**
 	 * This method returns the logged in user information to be displayed.
 	 *
-	 * @return an array of strings that holds the logged in user information
+	 * @return an array of strings that holds the logged in user information.
+	 * @throws RunTimeException if Twitter fails to get the desired information.
 	 */
 	public final String[] getUserInformation() {
 		String[] info = new String[5];
@@ -269,6 +310,8 @@ public class TwitterEngine {
 
 	/**
 	 * This method allows the logged in user to switch accounts.
+	 * It also updates the twitter4j.properties file to allow the
+	 * new user to be automatically logged in on startup.
 	 *
 	 * @param consumerKey
 	 *            the consumerKey of the account to switch to
@@ -278,6 +321,7 @@ public class TwitterEngine {
 	 *            the accessToken of the account to switch to
 	 * @param accessTokenSecret
 	 *            the accessTokenSecret of the account to switch to
+	 * @throws RunTimeException if Twitter fails to switch the accounts.
 	 */
 	public final void switchAccount(final String consumerKey,
 			final String consumerSecret,
