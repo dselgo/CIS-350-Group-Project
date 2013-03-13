@@ -1150,7 +1150,11 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 engine.followUser(id);
                 JOptionPane.showMessageDialog(null, "You have successfully followed a new user.");
             } else {
-                JOptionPane.showMessageDialog(null, "no user selectd");
+                index = followersList.getSelectedIndex();
+                if (index != -1){
+                    engine.followUser(engine.getUsers().getElementAt(index));
+                    JOptionPane.showMessageDialog(null, "You have successfully followed a new user.");
+                }
             }
         } catch (Exception ex){
             displayError(ex);
@@ -1295,7 +1299,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     }
     
     private void displayError(Exception ex){
-        JOptionPane.showMessageDialog(null, ex.getMessage() + "fail", "Twitter4J Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, ex.getMessage(), "Twitter4J Error", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
