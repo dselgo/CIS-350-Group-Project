@@ -1148,8 +1148,10 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             if (index != -1){
                 long id = engine.getTable().get(index).getId();
                 engine.followUser(id);
+                JOptionPane.showMessageDialog(null, "You have successfully followed a new user.");
+            } else {
+                JOptionPane.showMessageDialog(null, "no user selectd");
             }
-            JOptionPane.showMessageDialog(null, "You have successfully followed a new user.");
         } catch (Exception ex){
             displayError(ex);
         }
@@ -1238,6 +1240,8 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             engine.switchAccount(consumerKey, consumerSecret, accessToken, accessTokenSecret);
             updateUserInformation();
             switchAccountDialog.setVisible(false);
+            trendsList = new JList(engine.generateTrendingTopics());
+            followersList = new JList(engine.generateSuggestedUsers());
         } catch (Exception ex){
             displayError(ex);
         }
@@ -1291,7 +1295,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     }
     
     private void displayError(Exception ex){
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Twitter4J Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, ex.getMessage() + "fail", "Twitter4J Error", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
