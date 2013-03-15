@@ -24,13 +24,19 @@ import model.UserModel;
  * This class represents the engine that connects to the Twitter Service.
  *
  * @version 2.0
- * @authors Cameron Ohrt & Danny Selgo
+ * @author Cameron Ohrt & Danny Selgo
  */
 public class TwitterEngine {
-
+	/** represents the Twitter service. */
 	private Twitter engine;
+	
+	/** represents the table in the GUI. */
 	private TableModel table;
+	
+	/** represents the Trends JList in the GUI. */
 	private TrendModel trendList;
+	
+	/** represents the Followers JList in the GUI. */
 	private UserModel userList;
 
 	/**
@@ -47,7 +53,7 @@ public class TwitterEngine {
 	 * and modifies the table model.
 	 *
 	 * @param status the status to be posted.
-	 * @throws RunTimeException if Twitter fails to update the status.
+	 * @throws RuntimeException if Twitter fails to update the status.
 	 */
 	public final void updateStatus(final String status) {
 		try {
@@ -61,7 +67,8 @@ public class TwitterEngine {
 				result.getUser().getFriendsCount(),
 				result.getUser().getFollowersCount()));
 		} catch (TwitterException ex) {
-			throw new RuntimeException("Failed to update status: " + ex.getMessage());
+			throw new RuntimeException("Failed to update status: " 
+					+ ex.getMessage());
 		}
 	}
 
@@ -70,12 +77,13 @@ public class TwitterEngine {
 	 * and modifies the table model.
 	 *
 	 * @param sID the status to be retweeted.
-	 * @throws RunTimeException if Twitter fails to retweet the status.
+	 * @throws RuntimeException if Twitter fails to retweet the status.
 	 */
 	public final void retweet(final long sID) {
 		try {
-			if(sID == 0) {
-				throw new IllegalArgumentException("Unable to retweet this status.");
+			if (sID == 0) {
+				throw new IllegalArgumentException("Unable to retweet "
+						+ "this status.");
 			}
 			Status result = engine.retweetStatus(sID);
 			table.clear();
@@ -98,7 +106,7 @@ public class TwitterEngine {
 	 * and updates the table model.
 	 *
 	 * @param query the users to be searched.
-	 * @throws RunTimeException if Twitter fails to search for the user.
+	 * @throws RuntimeException if Twitter fails to search for the user.
 	 */
 	public final void searchPeople(final String query) {
 		try {
@@ -106,7 +114,7 @@ public class TwitterEngine {
 				engine.searchUsers(query, 1);
 			table.clear();
 			for (int i = 0; i < results.size(); i++) {
-				if(results.get(i).getStatus() == null){
+				if (results.get(i).getStatus() == null) {
 					table.add(new Tweet(0,
 							null,
 							results.get(i).getScreenName(),
@@ -134,7 +142,7 @@ public class TwitterEngine {
 	 * and updates the table model.
 	 *
 	 * @param query the tweets to be searched.
-	 * @throws RunTimeException if Twitter fails search for tweets.
+	 * @throws RuntimeException if Twitter fails search for tweets.
 	 */
 	public final void searchTweets(final String query) {
 		try {
@@ -159,7 +167,7 @@ public class TwitterEngine {
 	 * This method updates the table model with the most recent
 	 * tweets of the current user logged in.
 	 * 
-	 * @throws RunTimeException if Twitter fails to show the users timeline.
+	 * @throws RuntimeException if Twitter fails to show the users timeline.
 	 */
 	public final void showTimeLine() {
 		try {
@@ -176,7 +184,8 @@ public class TwitterEngine {
 						results.get(i).getUser().getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
-			throw new RuntimeException("Failed to find user timeline: " + ex.getMessage());
+			throw new RuntimeException("Failed to find user timeline: "
+					+ ex.getMessage());
 		}
 	}
 	
@@ -184,10 +193,10 @@ public class TwitterEngine {
 	 * This method updates the table model with the most recent
 	 * tweets of the user with the given screenName.
 	 * 
-	 * @param screen name of the desired timeline.
-	 * @throws RunTimeException if Twitter fails to show the desired timeline.
+	 * @param screenName screen name of the desired timeline.
+	 * @throws RuntimeException if Twitter fails to show the desired timeline.
 	 */
-	public void showTimeLine(String screenName) {
+	public void showTimeLine(final String screenName) {
 		try {
 			ResponseList<Status> results =
 					engine.getUserTimeline(screenName);
@@ -202,7 +211,8 @@ public class TwitterEngine {
 						results.get(i).getUser().getFollowersCount()));
 			}
 		} catch (TwitterException ex) {
-			throw new RuntimeException("Failed to find user timeline: " + ex.getMessage());
+			throw new RuntimeException("Failed to find user timeline: " 
+					+ ex.getMessage());
 		}
 	}
 	
@@ -211,7 +221,7 @@ public class TwitterEngine {
 	 * must be owned by the authenticated user.
 	 * 
 	 * @param sID the id of the tweet to delete.
-	 * @throws RunTimeException if Twitter fails to delete the tweet.
+	 * @throws RuntimeException if Twitter fails to delete the tweet.
 	 */
 	public final void deleteTweet(final long sID) {
 		try {
@@ -221,7 +231,8 @@ public class TwitterEngine {
                         showTimeLine();
                         
 		} catch (TwitterException ex) {
-			throw new RuntimeException("Failed to delete tweet: " + ex.getMessage());
+			throw new RuntimeException("Failed to delete tweet: " 
+					+ ex.getMessage());
 		}
 	}
 	
@@ -229,8 +240,8 @@ public class TwitterEngine {
 	/**
 	 * This method follows a selected user requested by the logged in user.
 	 *
-	 * @param id the selected user to follow
-	 * @throws RunTimeException if Twitter fails to follow the user.
+	 * @param screenName id of the selected user to follow
+	 * @throws RuntimeException if Twitter fails to follow the user.
 	 */
 	public final void followUser(final String screenName) {
 		try {
@@ -245,16 +256,20 @@ public class TwitterEngine {
 	 * Adds this list to the UserModel.
 	 * 
 	 * @return userList - the current UserModel.
-	 * @throws RunTimeException if Twitter fails to generate a who to follow list.
+	 * @throws RuntimeException if Twitter fails to generate a who to follow 
+	 * 		   list.
 	 */
 	public UserModel generateSuggestedUsers() {
 		try {
-			ResponseList<Category> categories = engine.getSuggestedUserCategories();
-			ResponseList<User> users = engine.getUserSuggestions(categories.get(0).getSlug());
+			ResponseList<Category> categories = 
+					engine.getSuggestedUserCategories();
+			ResponseList<User> users = 
+					engine.getUserSuggestions(categories.get(0).getSlug());
 			userList = new UserModel(users);
 			return userList;
-		} catch (TwitterException ex){
-			throw new RuntimeException("Failed to generate suggested users to follow: " + ex.getMessage());
+		} catch (TwitterException ex) {
+			throw new RuntimeException("Failed to generate suggested users"
+					+ "to follow: " + ex.getMessage());
 		}
 	}
 	
@@ -263,15 +278,16 @@ public class TwitterEngine {
 	 * Adds this list to the TrendModel.
 	 * 
 	 * @return trendList - the current TrendModel.
-	 * @throws RunTimeException if Twitter generate a trending topics list.
+	 * @throws RuntimeException if Twitter generate a trending topics list.
 	 */
 	public TrendModel generateTrendingTopics() {
-		try{
+		try {
 			Trends trends = engine.getPlaceTrends(1);
 			trendList = new TrendModel(trends);
 			return trendList;
-		} catch (TwitterException ex){
-			throw new RuntimeException("Failed to generate trending topics: " + ex.getMessage());
+		} catch (TwitterException ex) {
+			throw new RuntimeException("Failed to generate trending topics: " 
+					+ ex.getMessage());
 		}
 	}
 
@@ -289,7 +305,7 @@ public class TwitterEngine {
 	 *
 	 * @return trendList - the current TrendModel.
 	 */
-	public TrendModel getTrends(){
+	public TrendModel getTrends() {
 		return trendList;
 	}
 
@@ -298,7 +314,7 @@ public class TwitterEngine {
 	 *
 	 * @return userList - the current UserModel.
 	 */
-	public UserModel getUsers(){
+	public UserModel getUsers() {
 		return userList;
 	}
 	
@@ -306,7 +322,7 @@ public class TwitterEngine {
 	 * This method returns the logged in user information to be displayed.
 	 *
 	 * @return an array of strings that holds the logged in user information.
-	 * @throws RunTimeException if Twitter fails to get the desired information.
+	 * @throws RuntimeException if Twitter fails to get the desired information.
 	 */
 	public final String[] getUserInformation() {
 		String[] info = new String[5];
@@ -318,7 +334,8 @@ public class TwitterEngine {
 			info[3] = "" + user.getFollowersCount();
 			info[4] = "" + user.getStatusesCount();
 		} catch (TwitterException ex) {
-			throw new RuntimeException("Failed to accumulate user information: " + ex.getMessage());
+			throw new RuntimeException("Failed to accumulate user information: "
+					+ ex.getMessage());
 		}
 		return info;
 	}
@@ -336,7 +353,7 @@ public class TwitterEngine {
 	 *            the accessToken of the account to switch to
 	 * @param accessTokenSecret
 	 *            the accessTokenSecret of the account to switch to
-	 * @throws RunTimeException if Twitter fails to switch the accounts.
+	 * @throws RuntimeException if Twitter fails to switch the accounts.
 	 */
 	public final void switchAccount(final String consumerKey,
 			final String consumerSecret,
@@ -367,9 +384,11 @@ public class TwitterEngine {
 			engine = tf.getInstance();
 
 		} catch (IOException ex) {
-			throw new RuntimeException("Failed to write to .properties file: " + ex.getMessage());
+			throw new RuntimeException("Failed to write to .properties file: " 
+					+ ex.getMessage());
 		} catch (Exception ex) {
-			throw new RuntimeException("Failed to switch account: " + ex.getMessage());
+			throw new RuntimeException("Failed to switch account: " 
+					+ ex.getMessage());
 		}
 	}
 }

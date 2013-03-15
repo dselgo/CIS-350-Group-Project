@@ -13,8 +13,11 @@ import java.util.ArrayList;
  */
 public class TableModel extends AbstractTableModel {
 
+	/** represents the column names of the table. */
 	private String[] columnNames = new String[] {"Date", "Login Name",
 			"Display Name", "Following", "Followers" };
+	
+	/** a list of Tweets. */
 	private ArrayList<Tweet> tweets;
 
 	/**

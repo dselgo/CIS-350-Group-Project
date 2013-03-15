@@ -7,12 +7,25 @@ package model;
  */
 public class Tweet {
 
+	/** id of the Tweet. */
 	private long id;
+	
+	/** date the Tweet was created. */
 	private java.util.Date createdAt;
+	
+	/** login name of the user that created the Tweet. */
 	private String loginName;
+	
+	/** display name of the user that created the Tweet. */
 	private String displayName;
+	
+	/** text of the Tweet. */
 	private String text;
+	
+	/** friends count of the user that created the Tweet. */
 	private int friendsCount;
+	
+	/** followers count of the user that created the Tweet. */
 	private int followersCount;
 
 	/**
