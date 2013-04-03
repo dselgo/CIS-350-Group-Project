@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.io.FileOutputStream;
@@ -538,6 +540,55 @@ public class TwitterEngine {
 		}
 	}
 
+	/**
+	 * This method deletes the requested message
+	 * 
+	 * @param id
+	 *            the message to delete
+	 */
+	public final void deleteMessage(final long id) {
+		try {
+			DirectMessage message = engine.destroyDirectMessage(id);
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to delete message.");
+		}
+	}
+	
+	/**
+	 * This method retrives the messages sent and received between the
+	 * logged in user and the requested user and orders them by date created.
+	 * 
+	 * @param screenName the requested user to see the conversation between
+	 */
+	public final void showConversation(final String screenName)
+	{
+		try{
+			ResponseList<DirectMessage> sent = engine.getSentDirectMessages();
+			ResponseList<DirectMessage> received = engine.getDirectMessages();
+			ArrayList<DirectMessage> conversation = new ArrayList<DirectMessage>();
+			for(DirectMessage m: sent)
+			{
+				if(m.getRecipientScreenName().equals(screenName))
+				{
+					conversation.add(m);
+				}
+			}
+			for(DirectMessage m: received)
+			{
+				if(m.getSenderScreenName().equals(screenName))
+				{
+					conversation.add(m);
+				}
+			}
+			
+			Collections.sort(conversation, new MessageComparator());
+			
+		}catch(Exception ex){
+			throw new RuntimeException("Failed to retrieve conversation.");
+		}
+		
+	}
+	
 	/**
 	 * This method reports the requested user as a spammer
 	 * 
