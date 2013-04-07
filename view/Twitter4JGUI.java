@@ -8,8 +8,21 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import controller.*;
 import model.*;
+import java.io.*;
 
-
+class MyCustomFilter extends javax.swing.filechooser.FileFilter {
+    @Override
+    public boolean accept(File file) {
+            // Allow only directories, or files with ".txt" extension
+            return file.isDirectory() || file.getAbsolutePath().endsWith(".txt");
+        }
+        @Override
+        public String getDescription() {
+            // This description will be displayed in the dialog,
+            // hard-coded = ugly, should be done via I18N
+            return "Text documents (*.txt)";
+        }
+    }
 
 /**
  *
@@ -41,70 +54,119 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         consumerSecretLabel = new javax.swing.JLabel();
         accessTokenLabel = new javax.swing.JLabel();
         accessTokenSecretLabel = new javax.swing.JLabel();
-        consumerKeyTextField = new javax.swing.JTextField();
         consumerSecretTextField = new javax.swing.JTextField();
-        accessTokenTextField = new javax.swing.JTextField();
         accessTokenSecretTextField = new javax.swing.JTextField();
         switchAccountDialogButton = new javax.swing.JButton();
+        consumerKeyTextField = new javax.swing.JTextField();
+        accessTokenTextField = new javax.swing.JTextField();
+        conversationFrame = new javax.swing.JFrame();
+        conversationMainPanel = new javax.swing.JPanel();
         helpFrame = new javax.swing.JFrame();
-        closePanel = new javax.swing.JPanel();
-        closeButton = new javax.swing.JButton();
-        helpScrollPane = new javax.swing.JScrollPane();
-        mainHelpPanel = new javax.swing.JPanel();
-        timelineLine1 = new javax.swing.JLabel();
-        timelineLine2 = new javax.swing.JLabel();
-        timelineLine3 = new javax.swing.JLabel();
-        timelineLine4 = new javax.swing.JLabel();
-        timelineLine5 = new javax.swing.JLabel();
-        timelineLine6 = new javax.swing.JLabel();
-        timelineHeading = new javax.swing.JLabel();
-        searchUserHeading = new javax.swing.JLabel();
-        searchUserLine1 = new javax.swing.JLabel();
-        searchUserLine2 = new javax.swing.JLabel();
-        searchUserLine3 = new javax.swing.JLabel();
-        searchUserLine4 = new javax.swing.JLabel();
-        searchUserLine5 = new javax.swing.JLabel();
-        searchUserLine6 = new javax.swing.JLabel();
-        searchTopicHeading = new javax.swing.JLabel();
-        searchTopicLine1 = new javax.swing.JLabel();
-        searchTopicLine2 = new javax.swing.JLabel();
-        searchTopicLine3 = new javax.swing.JLabel();
-        searchTopicLine4 = new javax.swing.JLabel();
-        searchTopicLine8 = new javax.swing.JLabel();
-        searchTopicLine9 = new javax.swing.JLabel();
-        retweetHeading = new javax.swing.JLabel();
-        retweetLine1 = new javax.swing.JLabel();
-        retweetLine2 = new javax.swing.JLabel();
-        retweetLine3 = new javax.swing.JLabel();
-        retweetLine4 = new javax.swing.JLabel();
-        retweetLine5 = new javax.swing.JLabel();
-        retweetLine6 = new javax.swing.JLabel();
-        followHeading = new javax.swing.JLabel();
-        followLine1 = new javax.swing.JLabel();
-        followLine2 = new javax.swing.JLabel();
-        followLine3 = new javax.swing.JLabel();
-        followLine4 = new javax.swing.JLabel();
-        followLine5 = new javax.swing.JLabel();
-        followLine6 = new javax.swing.JLabel();
-        followLine7 = new javax.swing.JLabel();
-        followLine8 = new javax.swing.JLabel();
-        followLine9 = new javax.swing.JLabel();
-        followLine10 = new javax.swing.JLabel();
-        followLine11 = new javax.swing.JLabel();
-        searchTopicLine5 = new javax.swing.JLabel();
-        searchTopicLine6 = new javax.swing.JLabel();
-        searchTopicLine7 = new javax.swing.JLabel();
-        createTweetHeading = new javax.swing.JLabel();
-        createTweetLine1 = new javax.swing.JLabel();
-        createTweetLine2 = new javax.swing.JLabel();
-        createTweetLine3 = new javax.swing.JLabel();
-        createTweetLine4 = new javax.swing.JLabel();
-        createTweetLine5 = new javax.swing.JLabel();
-        retweetLine7 = new javax.swing.JLabel();
-        favoriteFrame = new javax.swing.JFrame();
-        mainFavoritePanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        helpMainPanel = new javax.swing.JPanel();
+        helpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine1 = new javax.swing.JLabel();
+        helpHeadingLine2 = new javax.swing.JLabel();
+        helpLine1 = new javax.swing.JLabel();
+        helpLine2 = new javax.swing.JLabel();
+        helpLine3 = new javax.swing.JLabel();
+        buttonPanel = new javax.swing.JPanel();
+        createTweetHelpButton = new javax.swing.JButton();
+        viewTimelinesHelpButton = new javax.swing.JButton();
+        searchUsersHelpButton = new javax.swing.JButton();
+        searchTopicsHelpButton = new javax.swing.JButton();
+        retweetHelpButton = new javax.swing.JButton();
+        followHelpButton = new javax.swing.JButton();
+        deleteHelpButton = new javax.swing.JButton();
+        conversationsHelpButton = new javax.swing.JButton();
+        favoritesHelpButton = new javax.swing.JButton();
+        blockHelpButton = new javax.swing.JButton();
+        reportHelpButton = new javax.swing.JButton();
+        closeHelpButton = new javax.swing.JButton();
+        createTweetHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine3 = new javax.swing.JLabel();
+        helpLine4 = new javax.swing.JLabel();
+        helpLine5 = new javax.swing.JLabel();
+        helpLine6 = new javax.swing.JLabel();
+        helpLine37 = new javax.swing.JLabel();
+        helpLine38 = new javax.swing.JLabel();
+        viewTimelinesHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine5 = new javax.swing.JLabel();
+        helpLine7 = new javax.swing.JLabel();
+        helpLine8 = new javax.swing.JLabel();
+        helpLine9 = new javax.swing.JLabel();
+        helpLine39 = new javax.swing.JLabel();
+        helpLine40 = new javax.swing.JLabel();
+        helpLine41 = new javax.swing.JLabel();
+        helpLine42 = new javax.swing.JLabel();
+        helpLine43 = new javax.swing.JLabel();
+        helpLine44 = new javax.swing.JLabel();
+        helpLine45 = new javax.swing.JLabel();
+        helpLine46 = new javax.swing.JLabel();
+        helpLine47 = new javax.swing.JLabel();
+        searchUsersHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine7 = new javax.swing.JLabel();
+        helpLine10 = new javax.swing.JLabel();
+        helpLine11 = new javax.swing.JLabel();
+        helpLine12 = new javax.swing.JLabel();
+        helpLine48 = new javax.swing.JLabel();
+        helpLine49 = new javax.swing.JLabel();
+        searchTopicsHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine9 = new javax.swing.JLabel();
+        helpLine13 = new javax.swing.JLabel();
+        helpLine14 = new javax.swing.JLabel();
+        helpLine15 = new javax.swing.JLabel();
+        helpLine50 = new javax.swing.JLabel();
+        helpLine51 = new javax.swing.JLabel();
+        helpLine52 = new javax.swing.JLabel();
+        helpLine53 = new javax.swing.JLabel();
+        retweetHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine11 = new javax.swing.JLabel();
+        helpLine16 = new javax.swing.JLabel();
+        helpLine17 = new javax.swing.JLabel();
+        helpLine18 = new javax.swing.JLabel();
+        helpLine54 = new javax.swing.JLabel();
+        helpLine55 = new javax.swing.JLabel();
+        helpLine56 = new javax.swing.JLabel();
+        followHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine13 = new javax.swing.JLabel();
+        helpLine19 = new javax.swing.JLabel();
+        helpLine20 = new javax.swing.JLabel();
+        helpLine21 = new javax.swing.JLabel();
+        helpLine57 = new javax.swing.JLabel();
+        helpLine58 = new javax.swing.JLabel();
+        helpLine59 = new javax.swing.JLabel();
+        helpLine60 = new javax.swing.JLabel();
+        deleteHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine15 = new javax.swing.JLabel();
+        helpHeadingLine16 = new javax.swing.JLabel();
+        helpLine22 = new javax.swing.JLabel();
+        helpLine23 = new javax.swing.JLabel();
+        helpLine24 = new javax.swing.JLabel();
+        conversationsHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine17 = new javax.swing.JLabel();
+        helpHeadingLine18 = new javax.swing.JLabel();
+        helpLine25 = new javax.swing.JLabel();
+        helpLine26 = new javax.swing.JLabel();
+        helpLine27 = new javax.swing.JLabel();
+        favoriteHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine19 = new javax.swing.JLabel();
+        helpHeadingLine20 = new javax.swing.JLabel();
+        helpLine28 = new javax.swing.JLabel();
+        helpLine29 = new javax.swing.JLabel();
+        helpLine30 = new javax.swing.JLabel();
+        blockUsersHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine21 = new javax.swing.JLabel();
+        helpHeadingLine22 = new javax.swing.JLabel();
+        helpLine31 = new javax.swing.JLabel();
+        helpLine32 = new javax.swing.JLabel();
+        helpLine33 = new javax.swing.JLabel();
+        reportUsersHelpContentPanel = new javax.swing.JPanel();
+        helpHeadingLine23 = new javax.swing.JLabel();
+        helpHeadingLine24 = new javax.swing.JLabel();
+        helpLine34 = new javax.swing.JLabel();
+        helpLine35 = new javax.swing.JLabel();
+        helpLine36 = new javax.swing.JLabel();
+        picVidFileChooser = new javax.swing.JFileChooser();
         mainPanel = new javax.swing.JPanel();
         mainTabPane = new javax.swing.JTabbedPane();
         createTweetPanel = new javax.swing.JPanel();
@@ -112,6 +174,8 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         tweetTextArea = new javax.swing.JScrollPane();
         enterTweetTextArea = new javax.swing.JTextArea();
         updateButton = new javax.swing.JButton();
+        fileTextField = new javax.swing.JTextField();
+        browseButton = new javax.swing.JButton();
         searchTopicsPanel = new javax.swing.JPanel();
         searchTopicLabel = new javax.swing.JLabel();
         searchTopicTextField = new javax.swing.JTextField();
@@ -135,7 +199,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         timelineButton = new javax.swing.JButton();
         reportButton = new javax.swing.JButton();
         twitterPic = new javax.swing.JLabel();
-        switchAccountButton = new javax.swing.JButton();
         tweetTableScrollPane = new javax.swing.JScrollPane();
         tweetTable = new JTable(engine.getTable());
         displayTweetText = new javax.swing.JTextArea();
@@ -151,6 +214,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         followersList = new JList(engine.generateSuggestedUsers())
         ;
         homeButton = new javax.swing.JButton();
+        accountComboBox = new javax.swing.JComboBox();
         menubar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         refreshMenuItem = new javax.swing.JMenuItem();
@@ -160,6 +224,9 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         removeFavoritesMenuItem = new javax.swing.JMenuItem();
         showFavoritesMenuItem = new javax.swing.JMenuItem();
         showUserFavoritesMenuItem = new javax.swing.JMenuItem();
+        conversationsMenu = new javax.swing.JMenu();
+        showConversationsMenuItem = new javax.swing.JMenuItem();
+        startNewConversationMenuItem = new javax.swing.JMenuItem();
         blockMenu = new javax.swing.JMenu();
         blockUserMenuItem = new javax.swing.JMenuItem();
         unblockUserMenuItem = new javax.swing.JMenuItem();
@@ -180,18 +247,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         accessTokenLabel.setText("Access Token:");
 
         accessTokenSecretLabel.setText("Access Token Secret:");
-
-        consumerKeyTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consumerKeyTextFieldActionPerformed(evt);
-            }
-        });
-
-        accessTokenTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accessTokenTextFieldActionPerformed(evt);
-            }
-        });
 
         switchAccountDialogButton.setText("OK");
         switchAccountDialogButton.addActionListener(new java.awt.event.ActionListener() {
@@ -218,10 +273,10 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                             .addComponent(consumerKeyLabel, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(consumerKeyTextField)
                             .addComponent(consumerSecretTextField)
-                            .addComponent(accessTokenTextField)
-                            .addComponent(accessTokenSecretTextField))))
+                            .addComponent(accessTokenSecretTextField)
+                            .addComponent(consumerKeyTextField)
+                            .addComponent(accessTokenTextField))))
                 .addContainerGap())
             .addGroup(switchAccountPanelLayout.createSequentialGroup()
                 .addGap(176, 176, 176)
@@ -236,20 +291,24 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(consumerKeyLabel)
-                    .addComponent(consumerKeyTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(consumerKeyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(consumerSecretLabel)
-                    .addComponent(consumerSecretTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(switchAccountPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(consumerSecretLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, switchAccountPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addComponent(consumerSecretTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
                 .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(accessTokenLabel)
-                    .addComponent(accessTokenTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(accessTokenTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(switchAccountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(accessTokenSecretLabel)
-                    .addComponent(accessTokenSecretTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(accessTokenSecretTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(switchAccountDialogButton))
         );
 
@@ -270,411 +329,975 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        helpFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        helpFrame.setTitle("Help");
-        helpFrame.setBounds(new java.awt.Rectangle(0, 0, 0, 0));
-        helpFrame.setMinimumSize(new java.awt.Dimension(382, 565));
-        helpFrame.setResizable(false);
+        conversationFrame.setTitle("Conversations");
 
-        closeButton.setText("Close");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout closePanelLayout = new javax.swing.GroupLayout(closePanel);
-        closePanel.setLayout(closePanelLayout);
-        closePanelLayout.setHorizontalGroup(
-            closePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(closePanelLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(closeButton)
-                .addContainerGap(159, Short.MAX_VALUE))
+        javax.swing.GroupLayout conversationMainPanelLayout = new javax.swing.GroupLayout(conversationMainPanel);
+        conversationMainPanel.setLayout(conversationMainPanelLayout);
+        conversationMainPanelLayout.setHorizontalGroup(
+            conversationMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 723, Short.MAX_VALUE)
         );
-        closePanelLayout.setVerticalGroup(
-            closePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(closeButton, javax.swing.GroupLayout.Alignment.TRAILING)
+        conversationMainPanelLayout.setVerticalGroup(
+            conversationMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 493, Short.MAX_VALUE)
         );
 
-        mainHelpPanel.setBackground(new java.awt.Color(0, 240, 240));
+        javax.swing.GroupLayout conversationFrameLayout = new javax.swing.GroupLayout(conversationFrame.getContentPane());
+        conversationFrame.getContentPane().setLayout(conversationFrameLayout);
+        conversationFrameLayout.setHorizontalGroup(
+            conversationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(conversationMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        conversationFrameLayout.setVerticalGroup(
+            conversationFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(conversationMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
-        timelineLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        timelineLine1.setText("Click the \"Show My Timeline\" button located in");
+        helpMainPanel.setBackground(new java.awt.Color(0, 204, 204));
 
-        timelineLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        timelineLine2.setText("the middle of the screen. This will display");
+        helpContentPanel.setOpaque(false);
+        helpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
 
-        timelineLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        timelineLine3.setText("your timeline in the table at the bottom of the");
+        helpHeadingLine1.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine1.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine1.setText("Twitter Desktop Application");
 
-        timelineLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        timelineLine4.setText("window. From the table, you can click on any");
+        helpHeadingLine2.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine2.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine2.setText("Help Window");
 
-        timelineLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        timelineLine5.setText("row and the content of your tweet will appear");
+        helpLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine1.setText("Please use the buttons along the right side to navigate ");
 
-        timelineLine6.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        timelineLine6.setText("in the white area above the table");
+        helpLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine2.setText("through the help window. If you have any more questions,");
 
-        timelineHeading.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
-        timelineHeading.setForeground(new java.awt.Color(255, 255, 255));
-        timelineHeading.setText("How to View Your Timeline");
+        helpLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine3.setText("please visit www.twitter.com.");
 
-        searchUserHeading.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
-        searchUserHeading.setForeground(new java.awt.Color(255, 255, 255));
-        searchUserHeading.setText("How to Search For Users");
-
-        searchUserLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchUserLine1.setText("First, click on the \"Search People\" tab located");
-
-        searchUserLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchUserLine2.setText("near the top of the window. In the white space,");
-
-        searchUserLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchUserLine3.setText("type the name of the person you would like to");
-
-        searchUserLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchUserLine4.setText("search and hit <Enter> or click the button");
-
-        searchUserLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchUserLine5.setText("\"Search People\". A list of users will be displayed");
-
-        searchUserLine6.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchUserLine6.setText("in the table at the bottom. ");
-
-        searchTopicHeading.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
-        searchTopicHeading.setForeground(new java.awt.Color(255, 255, 255));
-        searchTopicHeading.setText("How to Search For Topics");
-
-        searchTopicLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine1.setText("First, click on the \"Search Topics\" tab located");
-
-        searchTopicLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine2.setText("near the top of the window. In the white space,");
-
-        searchTopicLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine3.setText("type the topic you would like to search and ");
-
-        searchTopicLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine4.setText("hit <Enter> or click the button \"Search Topics\".");
-
-        searchTopicLine8.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine8.setText("topic will be displayed in the table at the");
-
-        searchTopicLine9.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine9.setText("bottom.");
-
-        retweetHeading.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
-        retweetHeading.setForeground(new java.awt.Color(255, 255, 255));
-        retweetHeading.setText("How to Retweet");
-
-        retweetLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine1.setText("First, search for a topic or user to get a list of");
-
-        retweetLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine2.setText("Tweets displayed in the table at the bottom of");
-
-        retweetLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine3.setText("the window. Click on the Login Name of the ");
-
-        retweetLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine4.setText("Tweet to highlight it, then click the \"Retweet\"");
-
-        retweetLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine5.setText("button located above the table. The Tweet that");
-
-        retweetLine6.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine6.setText("you retweeted will now be displayed in the");
-
-        followHeading.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
-        followHeading.setForeground(new java.awt.Color(255, 255, 255));
-        followHeading.setText("How to Follow Users");
-
-        followLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine1.setText("First, search for a topic or user to get a list of");
-
-        followLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine2.setText("Tweets displayed in the table at the bottom of");
-
-        followLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine3.setText("the window. Click on the Login Name of the a");
-
-        followLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine4.setText("Tweet to highlight it, then click the \"Follow\"");
-
-        followLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine5.setText("button located above the table. You can also");
-
-        followLine6.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine6.setText("click on the name of a user from the Suggested");
-
-        followLine7.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine7.setText("Users list located in the bottom right corner of the");
-
-        followLine8.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine8.setText("window. It will display that user's timeline. You");
-
-        followLine9.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine9.setText("can then click on any Tweet and click the \"Follow\" ");
-
-        followLine10.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine10.setText("button. A window will appear confirming that ");
-
-        followLine11.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        followLine11.setText("you have followed a user.");
-
-        searchTopicLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine5.setText("You can also click on one of the Trending Topics");
-
-        searchTopicLine6.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine6.setText("from the list located in the upper right corner");
-
-        searchTopicLine7.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        searchTopicLine7.setText("of the window. A list of Tweets related to that");
-
-        createTweetHeading.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
-        createTweetHeading.setForeground(new java.awt.Color(255, 255, 255));
-        createTweetHeading.setText("How to Create a Tweet");
-
-        createTweetLine1.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        createTweetLine1.setText("Click the \"Compose a Tweet\" tab at the top of the");
-
-        createTweetLine2.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        createTweetLine2.setText("window. Type what you want your Tweet to say");
-
-        createTweetLine3.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        createTweetLine3.setText("in the white space and then hit <Enter> or click");
-
-        createTweetLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        createTweetLine4.setText("the \"Update\" button. You window will appear");
-
-        createTweetLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        createTweetLine5.setText("confirming that you created a new Tweet.");
-
-        retweetLine7.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
-        retweetLine7.setText("table.");
-
-        javax.swing.GroupLayout mainHelpPanelLayout = new javax.swing.GroupLayout(mainHelpPanel);
-        mainHelpPanel.setLayout(mainHelpPanelLayout);
-        mainHelpPanelLayout.setHorizontalGroup(
-            mainHelpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainHelpPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout helpContentPanelLayout = new javax.swing.GroupLayout(helpContentPanel);
+        helpContentPanel.setLayout(helpContentPanelLayout);
+        helpContentPanelLayout.setHorizontalGroup(
+            helpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpContentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine2)
+                .addGap(134, 134, 134))
+            .addGroup(helpContentPanelLayout.createSequentialGroup()
+                .addGroup(helpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(helpContentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(helpHeadingLine1))
+                    .addGroup(helpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine1))
+                    .addGroup(helpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine2))
+                    .addGroup(helpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine3)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        helpContentPanelLayout.setVerticalGroup(
+            helpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(helpContentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainHelpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(timelineLine1)
-                    .addComponent(timelineLine2)
-                    .addComponent(timelineLine3)
-                    .addComponent(timelineLine4)
-                    .addComponent(timelineLine5)
-                    .addComponent(timelineLine6)
-                    .addComponent(timelineHeading)
-                    .addComponent(searchUserHeading)
-                    .addComponent(searchUserLine1)
-                    .addComponent(searchUserLine2)
-                    .addComponent(searchUserLine3)
-                    .addComponent(searchUserLine4)
-                    .addComponent(searchUserLine5)
-                    .addComponent(searchUserLine6)
-                    .addComponent(searchTopicHeading)
-                    .addComponent(searchTopicLine1)
-                    .addComponent(searchTopicLine2)
-                    .addComponent(searchTopicLine3)
-                    .addComponent(searchTopicLine4)
-                    .addComponent(searchTopicLine8)
-                    .addComponent(searchTopicLine9)
-                    .addComponent(searchTopicLine5)
-                    .addComponent(searchTopicLine6)
-                    .addComponent(searchTopicLine7)
-                    .addComponent(retweetHeading)
-                    .addComponent(retweetLine1)
-                    .addComponent(retweetLine2)
-                    .addComponent(retweetLine3)
-                    .addComponent(retweetLine4)
-                    .addComponent(retweetLine5)
-                    .addComponent(retweetLine6)
-                    .addComponent(followHeading)
-                    .addComponent(followLine1)
-                    .addComponent(followLine2)
-                    .addComponent(followLine3)
-                    .addComponent(followLine4)
-                    .addComponent(followLine5)
-                    .addComponent(followLine6)
-                    .addComponent(followLine7)
-                    .addComponent(followLine8)
-                    .addComponent(followLine9)
-                    .addComponent(followLine10)
-                    .addComponent(followLine11)
-                    .addComponent(createTweetHeading)
-                    .addComponent(createTweetLine3)
-                    .addComponent(createTweetLine4)
-                    .addComponent(createTweetLine5)
-                    .addComponent(createTweetLine1)
-                    .addComponent(createTweetLine2)
-                    .addComponent(retweetLine7))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-        mainHelpPanelLayout.setVerticalGroup(
-            mainHelpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainHelpPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(createTweetHeading)
+                .addComponent(helpHeadingLine1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(createTweetLine1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(createTweetLine2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(createTweetLine3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(createTweetLine4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(createTweetLine5)
+                .addComponent(helpHeadingLine2)
                 .addGap(18, 18, 18)
-                .addComponent(timelineHeading)
+                .addComponent(helpLine1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timelineLine1)
+                .addComponent(helpLine2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timelineLine2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timelineLine3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timelineLine4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timelineLine5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timelineLine6)
-                .addGap(18, 18, 18)
-                .addComponent(searchUserHeading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchUserLine1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchUserLine2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchUserLine3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchUserLine4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchUserLine5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchUserLine6)
-                .addGap(18, 18, 18)
-                .addComponent(searchTopicHeading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTopicLine9)
-                .addGap(18, 18, 18)
-                .addComponent(retweetHeading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(retweetLine7)
-                .addGap(18, 18, 18)
-                .addComponent(followHeading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(followLine11)
+                .addComponent(helpLine3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        helpScrollPane.setViewportView(mainHelpPanel);
+        buttonPanel.setOpaque(false);
+
+        createTweetHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        createTweetHelpButton.setText("Creating a Tweet");
+        createTweetHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createTweetHelpButtonActionPerformed(evt);
+            }
+        });
+
+        viewTimelinesHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        viewTimelinesHelpButton.setText("Viewing Timelines");
+        viewTimelinesHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewTimelinesHelpButtonActionPerformed(evt);
+            }
+        });
+
+        searchUsersHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        searchUsersHelpButton.setText("Searching for Users");
+        searchUsersHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchUsersHelpButtonActionPerformed(evt);
+            }
+        });
+
+        searchTopicsHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        searchTopicsHelpButton.setText("Searching for Topics");
+        searchTopicsHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTopicsHelpButtonActionPerformed(evt);
+            }
+        });
+
+        retweetHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        retweetHelpButton.setText("Retweeting");
+        retweetHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retweetHelpButtonActionPerformed(evt);
+            }
+        });
+
+        followHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        followHelpButton.setText("Following Users");
+        followHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                followHelpButtonActionPerformed(evt);
+            }
+        });
+
+        deleteHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        deleteHelpButton.setText("Deleting a Tweet");
+        deleteHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteHelpButtonActionPerformed(evt);
+            }
+        });
+
+        conversationsHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        conversationsHelpButton.setText("Having Conversations");
+        conversationsHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conversationsHelpButtonActionPerformed(evt);
+            }
+        });
+
+        favoritesHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        favoritesHelpButton.setText("Favoriting Tweets");
+        favoritesHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                favoritesHelpButtonActionPerformed(evt);
+            }
+        });
+
+        blockHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        blockHelpButton.setText("Blocking Users");
+        blockHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockHelpButtonActionPerformed(evt);
+            }
+        });
+
+        reportHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        reportHelpButton.setText("Reporting Users");
+        reportHelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportHelpButtonActionPerformed(evt);
+            }
+        });
+
+        closeHelpButton.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        closeHelpButton.setText("Close");
+
+        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
+        buttonPanel.setLayout(buttonPanelLayout);
+        buttonPanelLayout.setHorizontalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(createTweetHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(viewTimelinesHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchUsersHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchTopicsHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(retweetHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(followHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(conversationsHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(favoritesHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(blockHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reportHelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(closeHelpButton)
+                .addContainerGap())
+        );
+        buttonPanelLayout.setVerticalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(createTweetHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(viewTimelinesHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchUsersHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchTopicsHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(retweetHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(followHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(conversationsHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(favoritesHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(blockHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(reportHelpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(closeHelpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout helpMainPanelLayout = new javax.swing.GroupLayout(helpMainPanel);
+        helpMainPanel.setLayout(helpMainPanelLayout);
+        helpMainPanelLayout.setHorizontalGroup(
+            helpMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpMainPanelLayout.createSequentialGroup()
+                .addComponent(helpContentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        helpMainPanelLayout.setVerticalGroup(
+            helpMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout helpFrameLayout = new javax.swing.GroupLayout(helpFrame.getContentPane());
         helpFrame.getContentPane().setLayout(helpFrameLayout);
         helpFrameLayout.setHorizontalGroup(
             helpFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(closePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(helpFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(helpScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
+            .addComponent(helpMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         helpFrameLayout.setVerticalGroup(
             helpFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helpFrameLayout.createSequentialGroup()
-                .addGap(0, 531, Short.MAX_VALUE)
-                .addComponent(closePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(helpFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(helpFrameLayout.createSequentialGroup()
-                    .addComponent(helpScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 35, Short.MAX_VALUE)))
+            .addComponent(helpMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        createTweetHelpContentPanel.setOpaque(false);
+        createTweetHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
 
-        javax.swing.GroupLayout mainFavoritePanelLayout = new javax.swing.GroupLayout(mainFavoritePanel);
-        mainFavoritePanel.setLayout(mainFavoritePanelLayout);
-        mainFavoritePanelLayout.setHorizontalGroup(
-            mainFavoritePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainFavoritePanelLayout.createSequentialGroup()
+        helpHeadingLine3.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine3.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpHeadingLine3.setText("Creating a Tweet");
+
+        helpLine4.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine4.setText("Click the \"Compose a Tweet\" tab at the top of the window.");
+
+        helpLine5.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine5.setText("Type what you want your Tweet to say in the white space");
+
+        helpLine6.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine6.setText(" and then hit <Enter> or click the \"Post\" button. A window will");
+
+        helpLine37.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine37.setText("appear confirming that you have successfully created a new");
+
+        helpLine38.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine38.setText("Tweet.");
+
+        javax.swing.GroupLayout createTweetHelpContentPanelLayout = new javax.swing.GroupLayout(createTweetHelpContentPanel);
+        createTweetHelpContentPanel.setLayout(createTweetHelpContentPanelLayout);
+        createTweetHelpContentPanelLayout.setHorizontalGroup(
+            createTweetHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpHeadingLine3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(createTweetHelpContentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(createTweetHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLine4)
+                    .addComponent(helpLine5)
+                    .addComponent(helpLine6)
+                    .addComponent(helpLine37)
+                    .addComponent(helpLine38))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
-        mainFavoritePanelLayout.setVerticalGroup(
-            mainFavoritePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainFavoritePanelLayout.createSequentialGroup()
+        createTweetHelpContentPanelLayout.setVerticalGroup(
+            createTweetHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(createTweetHelpContentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine3)
+                .addGap(49, 49, 49)
+                .addComponent(helpLine4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine38)
+                .addContainerGap(251, Short.MAX_VALUE))
+        );
+
+        viewTimelinesHelpContentPanel.setOpaque(false);
+        viewTimelinesHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine5.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine5.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpHeadingLine5.setText("Viewing Timelines");
+
+        helpLine7.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine7.setForeground(new java.awt.Color(255, 255, 255));
+        helpLine7.setText("To view the Tweets you have created or retweeted:");
+
+        helpLine8.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine8.setText("Click the \"Show my Tweets\" button located in the middle of");
+
+        helpLine9.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine9.setText("the window. This will display the Tweets you have created in");
+
+        helpLine39.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine39.setText("the table at the bottom of the window. From the table, you");
+
+        helpLine40.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine40.setText("can click on any row and the content of your Tweet will");
+
+        helpLine41.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine41.setText("appear in the white area above the table.");
+
+        helpLine42.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine42.setForeground(new java.awt.Color(255, 255, 255));
+        helpLine42.setText("To view your Home timeline:");
+
+        helpLine43.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine43.setText("Click the \"Home\" button located near the top right corner of");
+
+        helpLine44.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine44.setText("the window. This will display the Tweets from your home ");
+
+        helpLine45.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine45.setText("timeline in the table at the bottom of the window. From the");
+
+        helpLine46.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine46.setText("table, you can click on any row and the content of that Tweet");
+
+        helpLine47.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine47.setText("will appear in the white area above the table.");
+
+        javax.swing.GroupLayout viewTimelinesHelpContentPanelLayout = new javax.swing.GroupLayout(viewTimelinesHelpContentPanel);
+        viewTimelinesHelpContentPanel.setLayout(viewTimelinesHelpContentPanelLayout);
+        viewTimelinesHelpContentPanelLayout.setHorizontalGroup(
+            viewTimelinesHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpHeadingLine5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(viewTimelinesHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(viewTimelinesHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLine7)
+                    .addComponent(helpLine8)
+                    .addComponent(helpLine9)
+                    .addComponent(helpLine39)
+                    .addComponent(helpLine40)
+                    .addComponent(helpLine41)
+                    .addComponent(helpLine42)
+                    .addComponent(helpLine43)
+                    .addComponent(helpLine44)
+                    .addComponent(helpLine45)
+                    .addComponent(helpLine46)
+                    .addComponent(helpLine47))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        viewTimelinesHelpContentPanelLayout.setVerticalGroup(
+            viewTimelinesHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewTimelinesHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine5)
+                .addGap(49, 49, 49)
+                .addComponent(helpLine7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine41)
+                .addGap(18, 18, 18)
+                .addComponent(helpLine42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine47)
+                .addContainerGap(92, Short.MAX_VALUE))
+        );
+
+        searchUsersHelpContentPanel.setOpaque(false);
+        searchUsersHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine7.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine7.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpHeadingLine7.setText("Searching for Users");
+
+        helpLine10.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine10.setText("First, click on the \"Search People\" tab located near the top of");
+
+        helpLine11.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine11.setText("the window. In the white space, type the name or screenname");
+
+        helpLine12.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine12.setText("of the person you would like to search for and hit <Enter> or ");
+
+        helpLine48.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine48.setText("click the \"Search People\" button. A list of users will be");
+
+        helpLine49.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine49.setText("displayed in the table at the bottom.");
+
+        javax.swing.GroupLayout searchUsersHelpContentPanelLayout = new javax.swing.GroupLayout(searchUsersHelpContentPanel);
+        searchUsersHelpContentPanel.setLayout(searchUsersHelpContentPanelLayout);
+        searchUsersHelpContentPanelLayout.setHorizontalGroup(
+            searchUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpHeadingLine7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(searchUsersHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(searchUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLine10)
+                    .addComponent(helpLine11)
+                    .addComponent(helpLine12)
+                    .addComponent(helpLine48)
+                    .addComponent(helpLine49))
                 .addContainerGap())
         );
+        searchUsersHelpContentPanelLayout.setVerticalGroup(
+            searchUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchUsersHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine7)
+                .addGap(49, 49, 49)
+                .addComponent(helpLine10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine49)
+                .addContainerGap(251, Short.MAX_VALUE))
+        );
 
-        javax.swing.GroupLayout favoriteFrameLayout = new javax.swing.GroupLayout(favoriteFrame.getContentPane());
-        favoriteFrame.getContentPane().setLayout(favoriteFrameLayout);
-        favoriteFrameLayout.setHorizontalGroup(
-            favoriteFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainFavoritePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        searchTopicsHelpContentPanel.setOpaque(false);
+        searchTopicsHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine9.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine9.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpHeadingLine9.setText("Searching for Topics");
+
+        helpLine13.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine13.setText("First, click on the \"Search Topics\" tab located near the top of");
+
+        helpLine14.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine14.setText("the window. In the white space, type the topic you would like");
+
+        helpLine15.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine15.setText("to search and hit <Enter> or click the \"Search Topics\" button.");
+
+        helpLine50.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine50.setText("You can also click on one of the Trending Topics from the list");
+
+        helpLine51.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine51.setText("located in the upper right corner of the window. A list of");
+
+        helpLine52.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine52.setText("Tweets related to that topic will be displayed in the table at");
+
+        helpLine53.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine53.setText("the bottom of the window.");
+
+        javax.swing.GroupLayout searchTopicsHelpContentPanelLayout = new javax.swing.GroupLayout(searchTopicsHelpContentPanel);
+        searchTopicsHelpContentPanel.setLayout(searchTopicsHelpContentPanelLayout);
+        searchTopicsHelpContentPanelLayout.setHorizontalGroup(
+            searchTopicsHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpHeadingLine9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(searchTopicsHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(searchTopicsHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLine13)
+                    .addComponent(helpLine14)
+                    .addComponent(helpLine15)
+                    .addComponent(helpLine50)
+                    .addComponent(helpLine51)
+                    .addComponent(helpLine52)
+                    .addComponent(helpLine53))
+                .addContainerGap())
         );
-        favoriteFrameLayout.setVerticalGroup(
-            favoriteFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainFavoritePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        searchTopicsHelpContentPanelLayout.setVerticalGroup(
+            searchTopicsHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchTopicsHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine9)
+                .addGap(49, 49, 49)
+                .addComponent(helpLine13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine51)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine53)
+                .addContainerGap(209, Short.MAX_VALUE))
         );
+
+        retweetHelpContentPanel.setOpaque(false);
+        retweetHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine11.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine11.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpHeadingLine11.setText("Retweeting");
+
+        helpLine16.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine16.setText("First, search for a topic or user to get a list of Tweets");
+
+        helpLine17.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine17.setText("displayed in the table at the bottom of the window. Click on");
+
+        helpLine18.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine18.setText("any row to highlight it, then click the \"Retweet\" button located");
+
+        helpLine54.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine54.setText("above the table. A window will appear to show that you have");
+
+        helpLine55.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine55.setText("successfully retweeted a Tweet. The Tweet will also be");
+
+        helpLine56.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine56.setText("displayed in the table.");
+
+        javax.swing.GroupLayout retweetHelpContentPanelLayout = new javax.swing.GroupLayout(retweetHelpContentPanel);
+        retweetHelpContentPanel.setLayout(retweetHelpContentPanelLayout);
+        retweetHelpContentPanelLayout.setHorizontalGroup(
+            retweetHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpHeadingLine11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(retweetHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(retweetHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLine16)
+                    .addComponent(helpLine17)
+                    .addComponent(helpLine18)
+                    .addComponent(helpLine54)
+                    .addComponent(helpLine55)
+                    .addComponent(helpLine56))
+                .addContainerGap())
+        );
+        retweetHelpContentPanelLayout.setVerticalGroup(
+            retweetHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(retweetHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine11)
+                .addGap(49, 49, 49)
+                .addComponent(helpLine16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine54)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine56)
+                .addContainerGap(230, Short.MAX_VALUE))
+        );
+
+        followHelpContentPanel.setOpaque(false);
+        followHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine13.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine13.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpHeadingLine13.setText("Following Users");
+
+        helpLine19.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine19.setText("First, search for a topic or user to get a list of Tweets displayed");
+
+        helpLine20.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine20.setText("in the table at the bottom of the window. Click on any Tweet");
+
+        helpLine21.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine21.setText("to highlight it, then click the \"Follow\" button located above the");
+
+        helpLine57.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine57.setText("table. You can also click on the name of a user from the");
+
+        helpLine58.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine58.setText("Suggested Users list located along the right side of the");
+
+        helpLine59.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine59.setText("window and then click the \"Follow\" button. A window will");
+
+        helpLine60.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine60.setText("appear confirming that you have followed a new user.");
+
+        javax.swing.GroupLayout followHelpContentPanelLayout = new javax.swing.GroupLayout(followHelpContentPanel);
+        followHelpContentPanel.setLayout(followHelpContentPanelLayout);
+        followHelpContentPanelLayout.setHorizontalGroup(
+            followHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(helpHeadingLine13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(followHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(followHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLine19)
+                    .addComponent(helpLine20)
+                    .addComponent(helpLine21)
+                    .addComponent(helpLine57)
+                    .addComponent(helpLine58)
+                    .addComponent(helpLine59)
+                    .addComponent(helpLine60))
+                .addContainerGap())
+        );
+        followHelpContentPanelLayout.setVerticalGroup(
+            followHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(followHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine13)
+                .addGap(49, 49, 49)
+                .addComponent(helpLine19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine58)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine59)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine60)
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+
+        deleteHelpContentPanel.setOpaque(false);
+        deleteHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine15.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine15.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine15.setText("Twitter Desktop Application");
+
+        helpHeadingLine16.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine16.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine16.setText("Help Window");
+
+        helpLine22.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine22.setText("Please use the buttons along the right side to navigate ");
+
+        helpLine23.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine23.setText("through the help window. If you have any more questions,");
+
+        helpLine24.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine24.setText("please visit www.twitter.com.");
+
+        javax.swing.GroupLayout deleteHelpContentPanelLayout = new javax.swing.GroupLayout(deleteHelpContentPanel);
+        deleteHelpContentPanel.setLayout(deleteHelpContentPanelLayout);
+        deleteHelpContentPanelLayout.setHorizontalGroup(
+            deleteHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deleteHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine16)
+                .addGap(134, 134, 134))
+            .addGroup(deleteHelpContentPanelLayout.createSequentialGroup()
+                .addGroup(deleteHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(deleteHelpContentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(helpHeadingLine15))
+                    .addGroup(deleteHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine22))
+                    .addGroup(deleteHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine23))
+                    .addGroup(deleteHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine24)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        deleteHelpContentPanelLayout.setVerticalGroup(
+            deleteHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deleteHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpHeadingLine16)
+                .addGap(18, 18, 18)
+                .addComponent(helpLine22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine24)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        conversationsHelpContentPanel.setOpaque(false);
+        conversationsHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine17.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine17.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine17.setText("Twitter Desktop Application");
+
+        helpHeadingLine18.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine18.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine18.setText("Help Window");
+
+        helpLine25.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine25.setText("Please use the buttons along the right side to navigate ");
+
+        helpLine26.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine26.setText("through the help window. If you have any more questions,");
+
+        helpLine27.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine27.setText("please visit www.twitter.com.");
+
+        javax.swing.GroupLayout conversationsHelpContentPanelLayout = new javax.swing.GroupLayout(conversationsHelpContentPanel);
+        conversationsHelpContentPanel.setLayout(conversationsHelpContentPanelLayout);
+        conversationsHelpContentPanelLayout.setHorizontalGroup(
+            conversationsHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, conversationsHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine18)
+                .addGap(134, 134, 134))
+            .addGroup(conversationsHelpContentPanelLayout.createSequentialGroup()
+                .addGroup(conversationsHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(conversationsHelpContentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(helpHeadingLine17))
+                    .addGroup(conversationsHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine25))
+                    .addGroup(conversationsHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine26))
+                    .addGroup(conversationsHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine27)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        conversationsHelpContentPanelLayout.setVerticalGroup(
+            conversationsHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conversationsHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpHeadingLine18)
+                .addGap(18, 18, 18)
+                .addComponent(helpLine25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine27)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        favoriteHelpContentPanel.setOpaque(false);
+        favoriteHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine19.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine19.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine19.setText("Twitter Desktop Application");
+
+        helpHeadingLine20.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine20.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine20.setText("Help Window");
+
+        helpLine28.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine28.setText("Please use the buttons along the right side to navigate ");
+
+        helpLine29.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine29.setText("through the help window. If you have any more questions,");
+
+        helpLine30.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine30.setText("please visit www.twitter.com.");
+
+        javax.swing.GroupLayout favoriteHelpContentPanelLayout = new javax.swing.GroupLayout(favoriteHelpContentPanel);
+        favoriteHelpContentPanel.setLayout(favoriteHelpContentPanelLayout);
+        favoriteHelpContentPanelLayout.setHorizontalGroup(
+            favoriteHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, favoriteHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine20)
+                .addGap(134, 134, 134))
+            .addGroup(favoriteHelpContentPanelLayout.createSequentialGroup()
+                .addGroup(favoriteHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(favoriteHelpContentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(helpHeadingLine19))
+                    .addGroup(favoriteHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine28))
+                    .addGroup(favoriteHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine29))
+                    .addGroup(favoriteHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine30)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        favoriteHelpContentPanelLayout.setVerticalGroup(
+            favoriteHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(favoriteHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpHeadingLine20)
+                .addGap(18, 18, 18)
+                .addComponent(helpLine28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine30)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        blockUsersHelpContentPanel.setOpaque(false);
+        blockUsersHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine21.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine21.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine21.setText("Twitter Desktop Application");
+
+        helpHeadingLine22.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine22.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine22.setText("Help Window");
+
+        helpLine31.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine31.setText("Please use the buttons along the right side to navigate ");
+
+        helpLine32.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine32.setText("through the help window. If you have any more questions,");
+
+        helpLine33.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine33.setText("please visit www.twitter.com.");
+
+        javax.swing.GroupLayout blockUsersHelpContentPanelLayout = new javax.swing.GroupLayout(blockUsersHelpContentPanel);
+        blockUsersHelpContentPanel.setLayout(blockUsersHelpContentPanelLayout);
+        blockUsersHelpContentPanelLayout.setHorizontalGroup(
+            blockUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, blockUsersHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine22)
+                .addGap(134, 134, 134))
+            .addGroup(blockUsersHelpContentPanelLayout.createSequentialGroup()
+                .addGroup(blockUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(blockUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(helpHeadingLine21))
+                    .addGroup(blockUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine31))
+                    .addGroup(blockUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine32))
+                    .addGroup(blockUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine33)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        blockUsersHelpContentPanelLayout.setVerticalGroup(
+            blockUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(blockUsersHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpHeadingLine22)
+                .addGap(18, 18, 18)
+                .addComponent(helpLine31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine33)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        reportUsersHelpContentPanel.setOpaque(false);
+        reportUsersHelpContentPanel.setPreferredSize(new java.awt.Dimension(435, 435));
+
+        helpHeadingLine23.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine23.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine23.setText("Twitter Desktop Application");
+
+        helpHeadingLine24.setFont(new java.awt.Font("Aharoni", 1, 24)); // NOI18N
+        helpHeadingLine24.setForeground(new java.awt.Color(255, 255, 255));
+        helpHeadingLine24.setText("Help Window");
+
+        helpLine34.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine34.setText("Please use the buttons along the right side to navigate ");
+
+        helpLine35.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine35.setText("through the help window. If you have any more questions,");
+
+        helpLine36.setFont(new java.awt.Font("Aharoni", 0, 14)); // NOI18N
+        helpLine36.setText("please visit www.twitter.com.");
+
+        javax.swing.GroupLayout reportUsersHelpContentPanelLayout = new javax.swing.GroupLayout(reportUsersHelpContentPanel);
+        reportUsersHelpContentPanel.setLayout(reportUsersHelpContentPanelLayout);
+        reportUsersHelpContentPanelLayout.setHorizontalGroup(
+            reportUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reportUsersHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(helpHeadingLine24)
+                .addGap(134, 134, 134))
+            .addGroup(reportUsersHelpContentPanelLayout.createSequentialGroup()
+                .addGroup(reportUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(reportUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(helpHeadingLine23))
+                    .addGroup(reportUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine34))
+                    .addGroup(reportUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine35))
+                    .addGroup(reportUsersHelpContentPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(helpLine36)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        reportUsersHelpContentPanelLayout.setVerticalGroup(
+            reportUsersHelpContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reportUsersHelpContentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(helpHeadingLine23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpHeadingLine24)
+                .addGap(18, 18, 18)
+                .addComponent(helpLine34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLine36)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        picVidFileChooser.setDialogTitle("Choose a picture or video...");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Twitter Desktop Application");
@@ -703,6 +1326,20 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             }
         });
 
+        fileTextField.setText("File to upload");
+        fileTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileTextFieldActionPerformed(evt);
+            }
+        });
+
+        browseButton.setText("Browse");
+        browseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout createTweetPanelLayout = new javax.swing.GroupLayout(createTweetPanel);
         createTweetPanel.setLayout(createTweetPanelLayout);
         createTweetPanelLayout.setHorizontalGroup(
@@ -712,24 +1349,35 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addComponent(tweetTextArea)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createTweetPanelLayout.createSequentialGroup()
-                .addContainerGap(99, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(enterTweetLabel)
-                .addGap(96, 96, 96))
+                .addGap(95, 95, 95))
             .addGroup(createTweetPanelLayout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(updateButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(createTweetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(createTweetPanelLayout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(updateButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(createTweetPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(browseButton)))
+                .addContainerGap())
         );
         createTweetPanelLayout.setVerticalGroup(
             createTweetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(createTweetPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(enterTweetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tweetTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tweetTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(createTweetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(browseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainTabPane.addTab("Compose a Tweet", createTweetPanel);
@@ -960,14 +1608,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
 
         twitterPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/twitterimage.jpg"))); // NOI18N
 
-        switchAccountButton.setFont(new java.awt.Font("Aharoni", 0, 12)); // NOI18N
-        switchAccountButton.setText("Switch Account");
-        switchAccountButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                switchAccountButtonActionPerformed(evt);
-            }
-        });
-
         tweetTable.getTableHeader().setReorderingAllowed(false);
         tweetTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1064,6 +1704,14 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             }
         });
 
+        accountComboBox.setFont(new java.awt.Font("Aharoni", 0, 12)); // NOI18N
+        accountComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sign In", "Sign Up", "Switch Account", "Sign Out" }));
+        accountComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -1091,9 +1739,9 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(switchAccountButton))
+                        .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(accountComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(trendsFollowersPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1119,9 +1767,8 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(displayTweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(switchAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(mainPanelLayout.createSequentialGroup()
                                     .addComponent(twitterPic, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
@@ -1186,6 +1833,16 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         favoritesMenu.add(showUserFavoritesMenuItem);
 
         menubar.add(favoritesMenu);
+
+        conversationsMenu.setText("Conversations");
+
+        showConversationsMenuItem.setText("Show My Conversations");
+        conversationsMenu.add(showConversationsMenuItem);
+
+        startNewConversationMenuItem.setText(" Start New Conversation");
+        conversationsMenu.add(startNewConversationMenuItem);
+
+        menubar.add(conversationsMenu);
 
         blockMenu.setText("Block");
 
@@ -1305,10 +1962,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tweetTableMouseClicked
 
-    private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountButtonActionPerformed
-        switchAccountDialog.setVisible(true);
-    }//GEN-LAST:event_switchAccountButtonActionPerformed
-
     private void searchTopicsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTopicsButtonActionPerformed
         try {
             engine.searchTweets(searchTopicTextField.getText());
@@ -1350,14 +2003,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             displayError(ex);
         }
     }//GEN-LAST:event_searchPeopleButtonActionPerformed
-
-    private void consumerKeyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumerKeyTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_consumerKeyTextFieldActionPerformed
-
-    private void accessTokenTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accessTokenTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_accessTokenTextFieldActionPerformed
 
     private void switchAccountDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchAccountDialogButtonActionPerformed
         try{
@@ -1406,10 +2051,6 @@ public class Twitter4JGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_refreshMenuItemActionPerformed
 
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        helpFrame.setVisible(false);
-    }//GEN-LAST:event_closeButtonActionPerformed
-
     private void getHelpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getHelpMenuItemActionPerformed
         helpFrame.setVisible(true);
     }//GEN-LAST:event_getHelpMenuItemActionPerformed
@@ -1449,6 +2090,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 long sid = engine.getTable().get(index).getId();
                 engine.addFavorite(sid);
             }
+            JOptionPane.showMessageDialog(null, "You have successfully added a favorite.");
         } catch (Exception ex) {
             displayError(ex);
         }
@@ -1461,6 +2103,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 String sid = engine.getTable().get(index).getLoginName();
                 engine.reportSpam(sid);
             }
+            JOptionPane.showMessageDialog(null, "You have successfully reported a user.");
         } catch (Exception ex) {
             displayError(ex);
         }
@@ -1473,6 +2116,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 long sid = engine.getTable().get(index).getId();
                 engine.deleteFavorite(sid);
             }
+            JOptionPane.showMessageDialog(null, "You have successfully removed a favorite.");
         } catch (Exception ex) {
             displayError(ex);
         }
@@ -1485,6 +2129,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 String sid = engine.getTable().get(index).getLoginName();
                 engine.blockUser(sid);
             }
+            JOptionPane.showMessageDialog(null, "You have successfully blocked a user.");
         } catch (Exception ex) {
             displayError(ex);
         }
@@ -1497,6 +2142,7 @@ public class Twitter4JGUI extends javax.swing.JFrame {
                 String sid = engine.getTable().get(index).getLoginName();
                 engine.unblockUser(sid);
             }
+            JOptionPane.showMessageDialog(null, "You have successfully unblocked a user.");
         } catch (Exception ex) {
             displayError(ex);
         }
@@ -1517,6 +2163,72 @@ public class Twitter4JGUI extends javax.swing.JFrame {
             displayError(ex);
         }
     }//GEN-LAST:event_homeButtonActionPerformed
+
+    private void createTweetHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTweetHelpButtonActionPerformed
+        helpContentPanel = createTweetHelpContentPanel;
+    }//GEN-LAST:event_createTweetHelpButtonActionPerformed
+
+    private void viewTimelinesHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTimelinesHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewTimelinesHelpButtonActionPerformed
+
+    private void searchUsersHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchUsersHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchUsersHelpButtonActionPerformed
+
+    private void searchTopicsHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTopicsHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTopicsHelpButtonActionPerformed
+
+    private void retweetHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retweetHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retweetHelpButtonActionPerformed
+
+    private void followHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_followHelpButtonActionPerformed
+
+    private void deleteHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteHelpButtonActionPerformed
+
+    private void conversationsHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conversationsHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_conversationsHelpButtonActionPerformed
+
+    private void favoritesHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritesHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_favoritesHelpButtonActionPerformed
+
+    private void blockHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_blockHelpButtonActionPerformed
+
+    private void reportHelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportHelpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportHelpButtonActionPerformed
+
+    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
+        int returnVal = picVidFileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = picVidFileChooser.getSelectedFile();
+            try {
+                fileTextField.read( new FileReader( file.getAbsolutePath() ), null );
+            } catch (IOException ex) {
+                System.out.println("problem accessing file " + file.getAbsolutePath());
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }//GEN-LAST:event_browseButtonActionPerformed
+
+    private void fileTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fileTextFieldActionPerformed
+
+    private void accountComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_accountComboBoxActionPerformed
     
     private void updateUserInformation(){
         nameLabelContent.setText(engine.getUserInformation()[0]);
@@ -1573,43 +2285,42 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private javax.swing.JLabel accessTokenSecretLabel;
     private javax.swing.JTextField accessTokenSecretTextField;
     private javax.swing.JTextField accessTokenTextField;
+    private javax.swing.JComboBox accountComboBox;
     private javax.swing.JMenuItem addFavoritesMenuItem;
+    private javax.swing.JButton blockHelpButton;
     private javax.swing.JMenu blockMenu;
     private javax.swing.JMenuItem blockUserMenuItem;
-    private javax.swing.JButton closeButton;
-    private javax.swing.JPanel closePanel;
+    private javax.swing.JPanel blockUsersHelpContentPanel;
+    private javax.swing.JButton browseButton;
+    private javax.swing.JPanel buttonPanel;
+    private javax.swing.JButton closeHelpButton;
     private javax.swing.JLabel consumerKeyLabel;
     private javax.swing.JTextField consumerKeyTextField;
     private javax.swing.JLabel consumerSecretLabel;
     private javax.swing.JTextField consumerSecretTextField;
-    private javax.swing.JLabel createTweetHeading;
-    private javax.swing.JLabel createTweetLine1;
-    private javax.swing.JLabel createTweetLine2;
-    private javax.swing.JLabel createTweetLine3;
-    private javax.swing.JLabel createTweetLine4;
-    private javax.swing.JLabel createTweetLine5;
+    private javax.swing.JFrame conversationFrame;
+    private javax.swing.JPanel conversationMainPanel;
+    private javax.swing.JButton conversationsHelpButton;
+    private javax.swing.JPanel conversationsHelpContentPanel;
+    private javax.swing.JMenu conversationsMenu;
+    private javax.swing.JButton createTweetHelpButton;
+    private javax.swing.JPanel createTweetHelpContentPanel;
     private javax.swing.JPanel createTweetPanel;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JButton deleteHelpButton;
+    private javax.swing.JPanel deleteHelpContentPanel;
     private javax.swing.JLabel displayNameLabelContent;
     private javax.swing.JTextArea displayTweetText;
     private javax.swing.JLabel enterTweetLabel;
     private javax.swing.JTextArea enterTweetTextArea;
-    private javax.swing.JFrame favoriteFrame;
+    private javax.swing.JPanel favoriteHelpContentPanel;
+    private javax.swing.JButton favoritesHelpButton;
     private javax.swing.JMenu favoritesMenu;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JTextField fileTextField;
     private javax.swing.JButton followButton;
-    private javax.swing.JLabel followHeading;
-    private javax.swing.JLabel followLine1;
-    private javax.swing.JLabel followLine10;
-    private javax.swing.JLabel followLine11;
-    private javax.swing.JLabel followLine2;
-    private javax.swing.JLabel followLine3;
-    private javax.swing.JLabel followLine4;
-    private javax.swing.JLabel followLine5;
-    private javax.swing.JLabel followLine6;
-    private javax.swing.JLabel followLine7;
-    private javax.swing.JLabel followLine8;
-    private javax.swing.JLabel followLine9;
+    private javax.swing.JButton followHelpButton;
+    private javax.swing.JPanel followHelpContentPanel;
     private javax.swing.JLabel followerLabel;
     private javax.swing.JLabel followersLabel;
     private javax.swing.JLabel followersLabelContent;
@@ -1618,75 +2329,128 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private javax.swing.JLabel followingLabel;
     private javax.swing.JLabel followingLabelContent;
     private javax.swing.JMenuItem getHelpMenuItem;
+    private javax.swing.JPanel helpContentPanel;
     private javax.swing.JFrame helpFrame;
+    private javax.swing.JLabel helpHeadingLine1;
+    private javax.swing.JLabel helpHeadingLine11;
+    private javax.swing.JLabel helpHeadingLine13;
+    private javax.swing.JLabel helpHeadingLine15;
+    private javax.swing.JLabel helpHeadingLine16;
+    private javax.swing.JLabel helpHeadingLine17;
+    private javax.swing.JLabel helpHeadingLine18;
+    private javax.swing.JLabel helpHeadingLine19;
+    private javax.swing.JLabel helpHeadingLine2;
+    private javax.swing.JLabel helpHeadingLine20;
+    private javax.swing.JLabel helpHeadingLine21;
+    private javax.swing.JLabel helpHeadingLine22;
+    private javax.swing.JLabel helpHeadingLine23;
+    private javax.swing.JLabel helpHeadingLine24;
+    private javax.swing.JLabel helpHeadingLine3;
+    private javax.swing.JLabel helpHeadingLine5;
+    private javax.swing.JLabel helpHeadingLine7;
+    private javax.swing.JLabel helpHeadingLine9;
+    private javax.swing.JLabel helpLine1;
+    private javax.swing.JLabel helpLine10;
+    private javax.swing.JLabel helpLine11;
+    private javax.swing.JLabel helpLine12;
+    private javax.swing.JLabel helpLine13;
+    private javax.swing.JLabel helpLine14;
+    private javax.swing.JLabel helpLine15;
+    private javax.swing.JLabel helpLine16;
+    private javax.swing.JLabel helpLine17;
+    private javax.swing.JLabel helpLine18;
+    private javax.swing.JLabel helpLine19;
+    private javax.swing.JLabel helpLine2;
+    private javax.swing.JLabel helpLine20;
+    private javax.swing.JLabel helpLine21;
+    private javax.swing.JLabel helpLine22;
+    private javax.swing.JLabel helpLine23;
+    private javax.swing.JLabel helpLine24;
+    private javax.swing.JLabel helpLine25;
+    private javax.swing.JLabel helpLine26;
+    private javax.swing.JLabel helpLine27;
+    private javax.swing.JLabel helpLine28;
+    private javax.swing.JLabel helpLine29;
+    private javax.swing.JLabel helpLine3;
+    private javax.swing.JLabel helpLine30;
+    private javax.swing.JLabel helpLine31;
+    private javax.swing.JLabel helpLine32;
+    private javax.swing.JLabel helpLine33;
+    private javax.swing.JLabel helpLine34;
+    private javax.swing.JLabel helpLine35;
+    private javax.swing.JLabel helpLine36;
+    private javax.swing.JLabel helpLine37;
+    private javax.swing.JLabel helpLine38;
+    private javax.swing.JLabel helpLine39;
+    private javax.swing.JLabel helpLine4;
+    private javax.swing.JLabel helpLine40;
+    private javax.swing.JLabel helpLine41;
+    private javax.swing.JLabel helpLine42;
+    private javax.swing.JLabel helpLine43;
+    private javax.swing.JLabel helpLine44;
+    private javax.swing.JLabel helpLine45;
+    private javax.swing.JLabel helpLine46;
+    private javax.swing.JLabel helpLine47;
+    private javax.swing.JLabel helpLine48;
+    private javax.swing.JLabel helpLine49;
+    private javax.swing.JLabel helpLine5;
+    private javax.swing.JLabel helpLine50;
+    private javax.swing.JLabel helpLine51;
+    private javax.swing.JLabel helpLine52;
+    private javax.swing.JLabel helpLine53;
+    private javax.swing.JLabel helpLine54;
+    private javax.swing.JLabel helpLine55;
+    private javax.swing.JLabel helpLine56;
+    private javax.swing.JLabel helpLine57;
+    private javax.swing.JLabel helpLine58;
+    private javax.swing.JLabel helpLine59;
+    private javax.swing.JLabel helpLine6;
+    private javax.swing.JLabel helpLine60;
+    private javax.swing.JLabel helpLine7;
+    private javax.swing.JLabel helpLine8;
+    private javax.swing.JLabel helpLine9;
+    private javax.swing.JPanel helpMainPanel;
     private javax.swing.JMenu helpMenuBar;
-    private javax.swing.JScrollPane helpScrollPane;
     private javax.swing.JButton homeButton;
-    private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel mainFavoritePanel;
-    private javax.swing.JPanel mainHelpPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane mainTabPane;
     private javax.swing.JMenuBar menubar;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel nameLabelContent;
+    private javax.swing.JFileChooser picVidFileChooser;
     private javax.swing.JLabel profileLabel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JMenuItem quitMenuItem;
     private javax.swing.JMenuItem refreshMenuItem;
     private javax.swing.JMenuItem removeFavoritesMenuItem;
     private javax.swing.JButton reportButton;
+    private javax.swing.JButton reportHelpButton;
+    private javax.swing.JPanel reportUsersHelpContentPanel;
     private javax.swing.JButton retweetButton;
-    private javax.swing.JLabel retweetHeading;
-    private javax.swing.JLabel retweetLine1;
-    private javax.swing.JLabel retweetLine2;
-    private javax.swing.JLabel retweetLine3;
-    private javax.swing.JLabel retweetLine4;
-    private javax.swing.JLabel retweetLine5;
-    private javax.swing.JLabel retweetLine6;
-    private javax.swing.JLabel retweetLine7;
+    private javax.swing.JButton retweetHelpButton;
+    private javax.swing.JPanel retweetHelpContentPanel;
     private javax.swing.JButton searchPeopleButton;
     private javax.swing.JLabel searchPeopleLabel;
     private javax.swing.JPanel searchPeoplePanel;
     private javax.swing.JTextField searchPeopleTextField;
-    private javax.swing.JLabel searchTopicHeading;
     private javax.swing.JLabel searchTopicLabel;
-    private javax.swing.JLabel searchTopicLine1;
-    private javax.swing.JLabel searchTopicLine2;
-    private javax.swing.JLabel searchTopicLine3;
-    private javax.swing.JLabel searchTopicLine4;
-    private javax.swing.JLabel searchTopicLine5;
-    private javax.swing.JLabel searchTopicLine6;
-    private javax.swing.JLabel searchTopicLine7;
-    private javax.swing.JLabel searchTopicLine8;
-    private javax.swing.JLabel searchTopicLine9;
     private javax.swing.JTextField searchTopicTextField;
     private javax.swing.JButton searchTopicsButton;
+    private javax.swing.JButton searchTopicsHelpButton;
+    private javax.swing.JPanel searchTopicsHelpContentPanel;
     private javax.swing.JPanel searchTopicsPanel;
-    private javax.swing.JLabel searchUserHeading;
-    private javax.swing.JLabel searchUserLine1;
-    private javax.swing.JLabel searchUserLine2;
-    private javax.swing.JLabel searchUserLine3;
-    private javax.swing.JLabel searchUserLine4;
-    private javax.swing.JLabel searchUserLine5;
-    private javax.swing.JLabel searchUserLine6;
+    private javax.swing.JButton searchUsersHelpButton;
+    private javax.swing.JPanel searchUsersHelpContentPanel;
     private javax.swing.JMenuItem showBlockedUsersMenuItem;
+    private javax.swing.JMenuItem showConversationsMenuItem;
     private javax.swing.JMenuItem showFavoritesMenuItem;
     private javax.swing.JMenuItem showUserFavoritesMenuItem;
-    private javax.swing.JButton switchAccountButton;
+    private javax.swing.JMenuItem startNewConversationMenuItem;
     private javax.swing.JDialog switchAccountDialog;
     private javax.swing.JButton switchAccountDialogButton;
     private javax.swing.JPanel switchAccountPanel;
     private javax.swing.JLabel switchAccountPromptLabel;
     private javax.swing.JButton timelineButton;
-    private javax.swing.JLabel timelineHeading;
-    private javax.swing.JLabel timelineLine1;
-    private javax.swing.JLabel timelineLine2;
-    private javax.swing.JLabel timelineLine3;
-    private javax.swing.JLabel timelineLine4;
-    private javax.swing.JLabel timelineLine5;
-    private javax.swing.JLabel timelineLine6;
     private javax.swing.JLabel trendLabel;
     private javax.swing.JPanel trendsFollowersPanel;
     private javax.swing.JList trendsList;
@@ -1700,6 +2464,8 @@ public class Twitter4JGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem unblockUserMenuItem;
     private javax.swing.JButton updateButton;
     private javax.swing.JLabel usernameLabel;
+    private javax.swing.JButton viewTimelinesHelpButton;
+    private javax.swing.JPanel viewTimelinesHelpContentPanel;
     // End of variables declaration//GEN-END:variables
     private TwitterEngine engine;
 }
