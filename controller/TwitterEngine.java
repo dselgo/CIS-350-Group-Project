@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import twitter4j.Category;
 import twitter4j.DirectMessage;
 import twitter4j.PagableResponseList;
@@ -18,6 +21,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.Query;
 import twitter4j.conf.ConfigurationBuilder;
+//import twitter4j.media.TwitterUpload;
 import model.Tweet;
 import model.TableModel;
 import model.TrendModel;
@@ -114,6 +118,10 @@ public class TwitterEngine {
 			throw new RuntimeException("Failed to retweet: " + ex.getMessage());
 		}
 	}
+	
+	/*public final void uploadImage(File image) {
+		TwitterUpload tu = new TwitterUpload(engine.getConfiguration(), engine.getAuthorization());
+	}*/
 
 	/**
 	 * This method searches Twitter for the requested users and updates the
@@ -371,6 +379,49 @@ public class TwitterEngine {
 		}
 		return info;
 	}
+	
+	public final void signUp(final String consumerKey,
+			final String consumerSecret, final String accessToken,
+			final String accessTokenSecret, final String username, final String password) {
+		try {
+			Properties prop = new Properties();
+
+			prop.setProperty("oauth.consumerKey", consumerKey);
+			prop.setProperty("oauth.consumerSecret", consumerSecret);
+			prop.setProperty("oauth.accessToken", accessToken);
+			prop.setProperty("oauth.accessTokenSecret", accessTokenSecret);
+			
+			prop.setProperty(username + ".consumerKey", consumerKey);
+			prop.setProperty(username + ".consumerSecret", consumerSecret);
+			prop.setProperty(username + ".accessToken", accessToken);
+			prop.setProperty(username + ".accessTokenSecret", accessTokenSecret);
+			prop.setProperty(username + ".password", password);
+
+			prop.store(new FileOutputStream("src/twitter4j.properties"), null);
+
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
+					.setOAuthConsumerSecret(consumerSecret)
+					.setOAuthAccessToken(accessToken)
+					.setOAuthAccessTokenSecret(accessTokenSecret);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			engine = tf.getInstance();
+		} catch (FileNotFoundException ex) {
+			try {
+				File file = new File("src/twitter4j.properties");
+				file.createNewFile();
+			} catch (IOException exc) {
+				throw new RuntimeException("Cannot create .properties file: "
+						+ exc.getMessage());
+			}
+		} catch (IOException ex) {
+			throw new RuntimeException("Failed to write to .properties file: "
+					+ ex.getMessage());
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to switch account: "
+					+ ex.getMessage());
+		}
+	}
 
 	/**
 	 * This method allows the logged in user to switch accounts. It also updates
@@ -388,12 +439,20 @@ public class TwitterEngine {
 	 * @throws RuntimeException
 	 *             if Twitter fails to switch the accounts.
 	 */
-	public final void switchAccount(final String consumerKey,
-			final String consumerSecret, final String accessToken,
-			final String accessTokenSecret) {
+	public final void switchAccount(final String username, final String password) {
 		try {
 			Properties prop = new Properties();
+			prop.load(new FileInputStream("src/twitter4j.properties"));
 
+			if(prop.getProperty(username + ".password").compareTo(password) != 0){
+				throw new IllegalArgumentException("Username or password is incorrect.");
+			}
+			
+			final String consumerKey = prop.getProperty(username + ".consumerKey");
+			final String consumerSecret = prop.getProperty(username + ".consumerSecret");
+			final String accessToken = prop.getProperty(username + ".accessToken");
+			final String accessTokenSecret = prop.getProperty(username + ".accessTokenSecret");
+			
 			prop.setProperty("oauth.consumerKey", consumerKey);
 			prop.setProperty("oauth.consumerSecret", consumerSecret);
 			prop.setProperty("oauth.accessToken", accessToken);
@@ -408,14 +467,19 @@ public class TwitterEngine {
 					.setOAuthAccessTokenSecret(accessTokenSecret);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			engine = tf.getInstance();
-
+		} catch (IllegalArgumentException ex) {
+			throw new RuntimeException(ex.getMessage());
 		} catch (IOException ex) {
-			throw new RuntimeException("Failed to write to .properties file: "
+			throw new RuntimeException("Failed to load from .properties file: "
 					+ ex.getMessage());
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to switch account: "
 					+ ex.getMessage());
 		}
+	}
+	
+	public void signOut(){
+		engine.shutdown();
 	}
 
 	/**
