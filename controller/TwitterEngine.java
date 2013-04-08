@@ -22,6 +22,7 @@ import model.Tweet;
 import model.TableModel;
 import model.TrendModel;
 import model.UserModel;
+import model.MessageModel;
 
 /**
  * This class represents the engine that connects to the Twitter Service.
@@ -39,8 +40,11 @@ public class TwitterEngine {
 	/** represents the Trends JList in the GUI. */
 	private TrendModel trendList;
 
-	/** represents the Followers JList in the GUI. */
-	private UserModel userList;
+	/** represents the Followers JLists in the GUI. */
+	private UserModel userList, friendsList;
+
+	/** represents the Messages JList in the GUI */
+	private MessageModel messageList;
 
 	/**
 	 * Constructor for the TwitterEngine class - uses the twitter4j.properties
@@ -49,6 +53,15 @@ public class TwitterEngine {
 	public TwitterEngine() {
 		engine = TwitterFactory.getSingleton();
 		table = new TableModel();
+		try {
+			friendsList = new UserModel(engine.getFriendsList(
+					engine.getScreenName(), 20));
+			messageList = new MessageModel(engine.getDirectMessages());
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to get messages for the user."
+					+ ex.getMessage());
+		}
+
 	}
 
 	/**
@@ -323,6 +336,20 @@ public class TwitterEngine {
 	}
 
 	/**
+	 * This method returns the current MessageModel.
+	 */
+	public MessageModel getMessageModel() {
+		return messageList;
+	}
+
+	/**
+	 * This method returns the current FriendsList UserModel.
+	 */
+	public UserModel getFriendsList() {
+		return friendsList;
+	}
+
+	/**
 	 * This method returns the logged in user information to be displayed.
 	 * 
 	 * @return an array of strings that holds the logged in user information.
@@ -440,7 +467,7 @@ public class TwitterEngine {
 			throw new RuntimeException("Failed to retrieve favorites.");
 		}
 	}
-	
+
 	/**
 	 * This method gets the list of favorites of the requested user
 	 * 
@@ -460,7 +487,8 @@ public class TwitterEngine {
 								.getFollowersCount()));
 			}
 		} catch (Exception ex) {
-			throw new RuntimeException("Failed to retrieve selected user's favorites.");
+			throw new RuntimeException(
+					"Failed to retrieve selected user's favorites.");
 		}
 	}
 
@@ -490,9 +518,11 @@ public class TwitterEngine {
 	 * This method gets all direct messages that the logged in user has sent to
 	 * them.
 	 */
-	public final void getMessages() {
+	public final void getInbox() {
 		try {
 			ResponseList<DirectMessage> list = engine.getDirectMessages();
+			messageList.clear();
+			messageList.add(list);
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to retrieve messages.");
 		}
@@ -504,7 +534,8 @@ public class TwitterEngine {
 	public final void getSentMessages() {
 		try {
 			ResponseList<DirectMessage> list = engine.getSentDirectMessages();
-
+			messageList.clear();
+			messageList.add(list);
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to retrieve sent messages.");
 		}
@@ -516,9 +547,9 @@ public class TwitterEngine {
 	 * @param id
 	 *            the message to show
 	 */
-	public final void showMessage(final long id) {
+	public final DirectMessage showMessage(final long id) {
 		try {
-			DirectMessage message = engine.showDirectMessage(id);
+			return engine.showDirectMessage(id);
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to show message.");
 		}
@@ -534,7 +565,7 @@ public class TwitterEngine {
 	 */
 	public final void sendMessage(final long id, final String text) {
 		try {
-			DirectMessage message = engine.sendDirectMessage(id, text);
+			engine.sendDirectMessage(id, text);
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to send message.");
 		}
@@ -548,47 +579,45 @@ public class TwitterEngine {
 	 */
 	public final void deleteMessage(final long id) {
 		try {
-			DirectMessage message = engine.destroyDirectMessage(id);
+			engine.destroyDirectMessage(id);
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to delete message.");
 		}
 	}
-	
+
 	/**
-	 * This method retrives the messages sent and received between the
-	 * logged in user and the requested user and orders them by date created.
+	 * This method retrives the messages sent and received between the logged in
+	 * user and the requested user and orders them by date created.
 	 * 
-	 * @param screenName the requested user to see the conversation between
+	 * @param screenName
+	 *            the requested user to see the conversation between
 	 */
-	public final void showConversation(final String screenName)
-	{
-		try{
+	public final void showConversation(final String screenName) {
+		try {
 			ResponseList<DirectMessage> sent = engine.getSentDirectMessages();
 			ResponseList<DirectMessage> received = engine.getDirectMessages();
 			ArrayList<DirectMessage> conversation = new ArrayList<DirectMessage>();
-			for(DirectMessage m: sent)
-			{
-				if(m.getRecipientScreenName().equals(screenName))
-				{
+			for (DirectMessage m : sent) {
+				if (m.getRecipientScreenName().equals(screenName)) {
 					conversation.add(m);
 				}
 			}
-			for(DirectMessage m: received)
-			{
-				if(m.getSenderScreenName().equals(screenName))
-				{
+			for (DirectMessage m : received) {
+				if (m.getSenderScreenName().equals(screenName)) {
 					conversation.add(m);
 				}
 			}
-			
+
 			Collections.sort(conversation, new MessageComparator());
-			
-		}catch(Exception ex){
+			messageList.clear();
+			messageList.add(conversation);
+
+		} catch (Exception ex) {
 			throw new RuntimeException("Failed to retrieve conversation.");
 		}
-		
+
 	}
-	
+
 	/**
 	 * This method reports the requested user as a spammer
 	 * 
@@ -660,4 +689,16 @@ public class TwitterEngine {
 		}
 	}
 
+	/**
+	 * This method shows the users who follow the logged in user
+	 */
+	public final void showFollowers() {
+		try {
+			PagableResponseList<User> result = engine.getFriendsList(
+					engine.getScreenName(), 20);
+			friendsList = new UserModel(result);
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to show users that follow you.");
+		}
+	}
 }
