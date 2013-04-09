@@ -479,7 +479,23 @@ public class TwitterEngine {
 	}
 	
 	public void signOut(){
-		engine.shutdown();
+		try {
+			engine.shutdown();
+			Properties prop = new Properties();
+			prop.load(new FileInputStream("src/twitter4j.properties"));
+			
+			prop.remove("oauth.consumerKey");
+			prop.remove("oauth.consumerSecret");
+			prop.remove("oauth.accessToken");
+			prop.remove("oauth.accessTokenSecret");
+			
+		} catch (IOException ex) {
+			throw new RuntimeException("Failed to load from .properties file: "
+					+ ex.getMessage());
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to switch account: "
+					+ ex.getMessage());
+		}
 	}
 
 	/**
