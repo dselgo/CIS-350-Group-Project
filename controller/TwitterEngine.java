@@ -516,6 +516,8 @@ public class TwitterEngine {
 			prop.remove("oauth.accessToken");
 			prop.remove("oauth.accessTokenSecret");
 			
+			prop.store(new FileOutputStream("src/twitter4j.properties"), null);
+			
 		} catch (IOException ex) {
 			throw new RuntimeException("Failed to load from .properties file: "
 					+ ex.getMessage());
