@@ -14,6 +14,7 @@ import twitter4j.DirectMessage;
 import twitter4j.PagableResponseList;
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.StatusUpdate;
 import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -21,7 +22,6 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.Query;
 import twitter4j.conf.ConfigurationBuilder;
-//import twitter4j.media.TwitterUpload;
 import model.Tweet;
 import model.TableModel;
 import model.TrendModel;
@@ -90,6 +90,22 @@ public class TwitterEngine {
 					+ ex.getMessage());
 		}
 	}
+	
+	public final void updateStatus(final String message, final File file) {
+		try {
+			StatusUpdate status = new StatusUpdate(message);
+			status.setMedia(file);
+			Status result = engine.updateStatus(status);
+			table.clear();
+			table.add(new Tweet(result.getId(), result.getCreatedAt(), result
+					.getUser().getScreenName(), result.getUser().getName(),
+					result.getText(), result.getUser().getFriendsCount(),
+					result.getUser().getFollowersCount()));
+		} catch (TwitterException ex) {
+			throw new RuntimeException("Failed to update status: "
+					+ ex.getMessage());
+		}
+	}
 
 	/**
 	 * This method retweets a status selected by the user and modifies the table
@@ -118,10 +134,6 @@ public class TwitterEngine {
 			throw new RuntimeException("Failed to retweet: " + ex.getMessage());
 		}
 	}
-	
-	/*public final void uploadImage(File image) {
-		TwitterUpload tu = new TwitterUpload(engine.getConfiguration(), engine.getAuthorization());
-	}*/
 
 	/**
 	 * This method searches Twitter for the requested users and updates the
@@ -397,7 +409,7 @@ public class TwitterEngine {
 			prop.setProperty(username + ".accessTokenSecret", accessTokenSecret);
 			prop.setProperty(username + ".password", password);
 
-			prop.store(new FileOutputStream("src/twitter4j.properties"), null);
+			prop.store(new FileOutputStream("src/twitter4j.properties", true), null);
 
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
