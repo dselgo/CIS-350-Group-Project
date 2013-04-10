@@ -383,17 +383,26 @@ public class TwitterEngine {
 	 */
 	public final String[] getUserInformation() {
 		String[] info = new String[5];
-		try {
-			User user = engine.showUser(engine.getId());
-			info[0] = user.getName();
-			info[1] = user.getScreenName();
-			info[2] = "" + user.getFriendsCount();
-			info[3] = "" + user.getFollowersCount();
-			info[4] = "" + user.getStatusesCount();
-		} catch (TwitterException ex) {
-			throw new RuntimeException(
-					"Failed to accumulate user information: " + ex.getMessage());
+		if(isAuthenticated()){
+			try {
+				User user = engine.showUser(engine.getId());
+				info[0] = user.getName();
+				info[1] = user.getScreenName();
+				info[2] = "" + user.getFriendsCount();
+				info[3] = "" + user.getFollowersCount();
+				info[4] = "" + user.getStatusesCount();
+			} catch (TwitterException ex) {
+				throw new RuntimeException(
+						"Failed to accumulate user information: " + ex.getMessage());
+			}
+		} else {
+			info[0] = "<null>";
+			info[1] = "<null>";
+			info[2] = "<null>";
+			info[3] = "<null>";
+			info[4] = "<null>";
 		}
+		
 		return info;
 	}
 	
