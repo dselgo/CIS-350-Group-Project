@@ -91,9 +91,10 @@ public class TwitterEngine {
 		}
 	}
 	
-	public final void updateStatus(final String message, final File file) {
+	public final void updateStatus(final String message, final String pathname) {
 		try {
 			StatusUpdate status = new StatusUpdate(message);
+			File file = new File(pathname);
 			status.setMedia(file);
 			Status result = engine.updateStatus(status);
 			table.clear();
