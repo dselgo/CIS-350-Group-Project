@@ -302,12 +302,16 @@ public class TwitterEngine {
 	 */
 	public UserModel generateSuggestedUsers() {
 		try {
-			ResponseList<Category> categories = engine
-					.getSuggestedUserCategories();
-			ResponseList<User> users = engine.getUserSuggestions(categories
-					.get(0).getSlug());
-			userList = new UserModel(users);
-			return userList;
+			if(isAuthenticated()){
+				ResponseList<Category> categories = engine
+						.getSuggestedUserCategories();
+				ResponseList<User> users = engine.getUserSuggestions(categories
+						.get(0).getSlug());
+				userList = new UserModel(users);
+				return userList;
+			} else {
+				return userList = new UserModel(null);
+			}
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Failed to generate suggested users"
 					+ "to follow: " + ex.getMessage());
@@ -324,9 +328,14 @@ public class TwitterEngine {
 	 */
 	public TrendModel generateTrendingTopics() {
 		try {
-			Trends trends = engine.getPlaceTrends(1);
-			trendList = new TrendModel(trends);
-			return trendList;
+			if(isAuthenticated()){
+				Trends trends = engine.getPlaceTrends(1);
+				trendList = new TrendModel(trends);
+				return trendList;
+			} else {
+				return trendList = new TrendModel(null);
+			}
+			
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Failed to generate trending topics: "
 					+ ex.getMessage());
