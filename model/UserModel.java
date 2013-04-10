@@ -1,6 +1,7 @@
 package model;
 
 import javax.swing.AbstractListModel;
+import java.util.List;
 import twitter4j.ResponseList;
 import twitter4j.User;
 
@@ -37,6 +38,9 @@ public class UserModel extends AbstractListModel {
 	 * @return returns the number of users stored in the UserModel.
 	 */
 	public int getSize() {
+		if(users == null) {
+			return 0;
+		}
 		return users.size();
 	}
 	
@@ -47,6 +51,9 @@ public class UserModel extends AbstractListModel {
 	 * @return the screen name of the user at the given index.
 	 */
 	public String getElementAt(final int index) {
+		if(users == null) {
+			return "<null>";
+		}
 		return users.get(index).getScreenName();
 	}
 }
