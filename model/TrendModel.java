@@ -17,7 +17,9 @@ public class TrendModel extends AbstractListModel {
 	/** array of Trends. */
 	private Trend[] trends;
 	
-	public TrendModel(){}
+	public TrendModel() {
+		trends = null;
+	}
 	
 	/**
 	 * Constructor for the TrendModel.  Stores the list of trends 

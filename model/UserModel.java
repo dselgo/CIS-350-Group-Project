@@ -17,7 +17,9 @@ public class UserModel extends AbstractListModel {
 	/** ResponseList of Users. */
 	private ResponseList<User> users;
 	
-	public UserModel(){}
+	public UserModel() {
+		users = null;
+	}
 	
 	/**
 	 * Constructor for the UserModel.  Stores the list of users generated 
