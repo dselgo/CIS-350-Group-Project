@@ -67,6 +67,10 @@ public class TwitterEngine {
 		}
 
 	}
+	
+	public boolean isAuthenticated(){
+		return engine.getAuthorization().isEnabled();
+	}
 
 	/**
 	 * This method updates the status of the current user and modifies the table
