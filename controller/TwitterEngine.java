@@ -506,6 +506,7 @@ public class TwitterEngine {
 	
 	public void signOut(){
 		try {
+			engine.setOAuthAccessToken(null);
 			engine.shutdown();
 			Properties prop = new Properties();
 			prop.load(new FileInputStream("src/twitter4j.properties"));
