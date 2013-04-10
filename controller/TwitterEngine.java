@@ -57,15 +57,6 @@ public class TwitterEngine {
 	public TwitterEngine() {
 		engine = TwitterFactory.getSingleton();
 		table = new TableModel();
-		try {
-			friendsList = new UserModel(engine.getFriendsList(
-					engine.getScreenName(), 20));
-			messageList = new MessageModel(engine.getDirectMessages());
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to get messages for the user."
-					+ ex.getMessage());
-		}
-
 	}
 	
 	public boolean isAuthenticated(){
@@ -310,7 +301,7 @@ public class TwitterEngine {
 				userList = new UserModel(users);
 				return userList;
 			} else {
-				return userList = new UserModel(null);
+				return userList = new UserModel();
 			}
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Failed to generate suggested users"
@@ -333,7 +324,7 @@ public class TwitterEngine {
 				trendList = new TrendModel(trends);
 				return trendList;
 			} else {
-				return trendList = new TrendModel(null);
+				return trendList = new TrendModel();
 			}
 			
 		} catch (TwitterException ex) {
