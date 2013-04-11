@@ -4,19 +4,19 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 /**
- * This class stores all of the tweets gathered from the controller. The
- * class extends the AbstractTableModel class so that we may display the
- * information on a JTable in the GUI.
- *
+ * This class stores all of the tweets gathered from the controller. The class
+ * extends the AbstractTableModel class so that we may display the information
+ * on a JTable in the GUI.
+ * 
  * @version 2.0
  * @author Danny Selgo
  */
 public class TableModel extends AbstractTableModel {
 
 	/** represents the column names of the table. */
-	private String[] columnNames = new String[] {"Date", "Login Name",
+	private String[] columnNames = new String[] { "Date", "Login Name",
 			"Display Name", "Following", "Followers" };
-	
+
 	/** a list of Tweets. */
 	private ArrayList<Tweet> tweets;
 
@@ -29,10 +29,10 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns the tweet at the given index.
-	 *
-	 * @param index the index to store the tweet in ArrayList<Tweet> tweets.
-	 * @return the tweet stored in ArrayList<Tweet> tweets
-	 * 		   at the given index.
+	 * 
+	 * @param index
+	 *            the index to store the tweet in ArrayList<Tweet> tweets.
+	 * @return the tweet stored in ArrayList<Tweet> tweets at the given index.
 	 */
 	public final Tweet get(final int index) {
 		return tweets.get(index);
@@ -40,7 +40,7 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns all of the tweets in the TableModel.
-	 *
+	 * 
 	 * @return the ArrayList<Tweet> tweets.
 	 */
 	public final ArrayList<Tweet> getTweets() {
@@ -49,24 +49,26 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Adds a tweet to ArrayList<Tweet> tweets and updates the table.
-	 *
-	 * @param tweet the tweet to be added to ArrayList<Tweet> tweets.
+	 * 
+	 * @param tweet
+	 *            the tweet to be added to ArrayList<Tweet> tweets.
 	 */
 	public final void add(final Tweet tweet) {
 		if (tweet != null) {
 			tweets.add(tweet);
-			fireTableRowsInserted(tweets.size() - 1,
-				tweets.size() - 1);
+			fireTableRowsInserted(tweets.size() - 1, tweets.size() - 1);
 		}
 	}
 
 	/**
 	 * Adds a tweet to ArrayList<Tweet> tweets at the specified index and
 	 * updates the table.
-	 *
-	 * @param index the index of ArrayList<Tweet> tweets in
-	 * 				which the tweet will be stored.
-	 * @param tweet the tweet to be stored.
+	 * 
+	 * @param index
+	 *            the index of ArrayList<Tweet> tweets in which the tweet will
+	 *            be stored.
+	 * @param tweet
+	 *            the tweet to be stored.
 	 */
 	public final void add(final int index, final Tweet tweet) {
 		if (tweet != null) {
@@ -78,8 +80,9 @@ public class TableModel extends AbstractTableModel {
 	/**
 	 * Removes the tweet at the given index from ArrayList<Tweet> tweets and
 	 * then updates the table.
-	 *
-	 * @param index the index location of the tweet to be removed.
+	 * 
+	 * @param index
+	 *            the index location of the tweet to be removed.
 	 */
 	public final void remove(final int index) {
 		tweets.remove(index);
@@ -88,8 +91,9 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Removes the tweet from ArrayList<Tweet> tweets.
-	 *
-	 * @param tweet the tweet that is to be removed.
+	 * 
+	 * @param tweet
+	 *            the tweet that is to be removed.
 	 */
 	public final void remove(final Tweet tweet) {
 		remove(tweets.indexOf(tweet));
@@ -109,7 +113,7 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns the number of columns in the TableModel.
-	 *
+	 * 
 	 * @return the number of columns in the TableModel.
 	 */
 	public final int getColumnCount() {
@@ -118,7 +122,7 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns the number of rows in the TableModel.
-	 *
+	 * 
 	 * @return the number of rows in the TableModel.
 	 */
 	public final int getRowCount() {
@@ -127,8 +131,9 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns the name of the column in position col.
-	 *
-	 * @param col the column number.
+	 * 
+	 * @param col
+	 *            the column number.
 	 * @return a String containing the columnname of the specified column.
 	 */
 	public final String getColumnName(final int col) {
@@ -137,9 +142,11 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns a piece of information at the specified cell in the table.
-	 *
-	 * @param row the row of the desired cell.
-	 * @param col the column of the desired cell.
+	 * 
+	 * @param row
+	 *            the row of the desired cell.
+	 * @param col
+	 *            the column of the desired cell.
 	 * @return the data that is stored in the specified row and column.
 	 */
 	public final Object getValueAt(final int row, final int col) {
@@ -172,8 +179,9 @@ public class TableModel extends AbstractTableModel {
 
 	/**
 	 * Returns the index of a given tweet t.
-	 *
-	 * @param t the tweet in ArrayList<Tweet> tweets.
+	 * 
+	 * @param t
+	 *            the tweet in ArrayList<Tweet> tweets.
 	 * @return the index of the the tweet in ArrayList<Tweet> tweets.
 	 */
 	public final int indexOf(final Tweet t) {

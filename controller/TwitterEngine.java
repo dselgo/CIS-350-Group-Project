@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.io.File;
@@ -10,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import twitter4j.Category;
-import twitter4j.DirectMessage;
 import twitter4j.PagableResponseList;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -26,7 +23,6 @@ import model.Tweet;
 import model.TableModel;
 import model.TrendModel;
 import model.UserModel;
-import model.MessageModel;
 
 /**
  * This class represents the engine that connects to the Twitter Service.
@@ -45,10 +41,7 @@ public class TwitterEngine {
 	private TrendModel trendList;
 
 	/** represents the Followers JLists in the GUI. */
-	private UserModel userList, friendsList;
-
-	/** represents the Messages JList in the GUI */
-	private MessageModel messageList;
+	private UserModel userList;
 
 	/**
 	 * Constructor for the TwitterEngine class - uses the twitter4j.properties
@@ -58,8 +51,13 @@ public class TwitterEngine {
 		engine = TwitterFactory.getSingleton();
 		table = new TableModel();
 	}
-	
-	public boolean isAuthenticated(){
+
+	/**
+	 * Returns true if there is an authenticated user logged in.
+	 * 
+	 * @return true if a user is logged in, false otherwise.
+	 */
+	public boolean isAuthenticated() {
 		return engine.getAuthorization().isEnabled();
 	}
 
@@ -74,23 +72,6 @@ public class TwitterEngine {
 	 */
 	public final void updateStatus(final String status) {
 		try {
-			Status result = engine.updateStatus(status);
-			table.clear();
-			table.add(new Tweet(result.getId(), result.getCreatedAt(), result
-					.getUser().getScreenName(), result.getUser().getName(),
-					result.getText(), result.getUser().getFriendsCount(),
-					result.getUser().getFollowersCount()));
-		} catch (TwitterException ex) {
-			throw new RuntimeException("Failed to update status: "
-					+ ex.getMessage());
-		}
-	}
-	
-	public final void updateStatus(final String message, final String pathname) {
-		try {
-			StatusUpdate status = new StatusUpdate(message);
-			File file = new File(pathname);
-			status.setMedia(file);
 			Status result = engine.updateStatus(status);
 			table.clear();
 			table.add(new Tweet(result.getId(), result.getCreatedAt(), result
@@ -257,8 +238,6 @@ public class TwitterEngine {
 	public final void deleteTweet(final long sID) {
 		try {
 			engine.destroyStatus(sID);
-			// table.remove(tweet);
-			// or just clear table?
 			showTimeLine();
 
 		} catch (TwitterException ex) {
@@ -293,7 +272,7 @@ public class TwitterEngine {
 	 */
 	public UserModel generateSuggestedUsers() {
 		try {
-			if(isAuthenticated()){
+			if (isAuthenticated()) {
 				ResponseList<Category> categories = engine
 						.getSuggestedUserCategories();
 				ResponseList<User> users = engine.getUserSuggestions(categories
@@ -319,14 +298,14 @@ public class TwitterEngine {
 	 */
 	public TrendModel generateTrendingTopics() {
 		try {
-			if(isAuthenticated()){
+			if (isAuthenticated()) {
 				Trends trends = engine.getPlaceTrends(1);
 				trendList = new TrendModel(trends);
 				return trendList;
 			} else {
 				return trendList = new TrendModel();
 			}
-			
+
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Failed to generate trending topics: "
 					+ ex.getMessage());
@@ -361,29 +340,15 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method returns the current MessageModel.
-	 */
-	public MessageModel getMessageModel() {
-		return messageList;
-	}
-
-	/**
-	 * This method returns the current FriendsList UserModel.
-	 */
-	public UserModel getFriendsList() {
-		return friendsList;
-	}
-
-	/**
 	 * This method returns the logged in user information to be displayed.
 	 * 
-	 * @return an array of strings that holds the logged in user information.
+	 * @return an array of strings that holds the logged in user's information.
 	 * @throws RuntimeException
 	 *             if Twitter fails to get the desired information.
 	 */
 	public final String[] getUserInformation() {
 		String[] info = new String[5];
-		if(isAuthenticated()){
+		if (isAuthenticated()) {
 			try {
 				User user = engine.showUser(engine.getId());
 				info[0] = user.getName();
@@ -393,7 +358,8 @@ public class TwitterEngine {
 				info[4] = "" + user.getStatusesCount();
 			} catch (TwitterException ex) {
 				throw new RuntimeException(
-						"Failed to accumulate user information: " + ex.getMessage());
+						"Failed to accumulate user information: "
+								+ ex.getMessage());
 			}
 		} else {
 			info[0] = "<null>";
@@ -402,13 +368,39 @@ public class TwitterEngine {
 			info[3] = "<null>";
 			info[4] = "<null>";
 		}
-		
 		return info;
 	}
-	
+
+	/**
+	 * This method creates an account for this application by taking the user's
+	 * authentication information along with a given username and password to be
+	 * added to the twitter4j.properties file. This allows for any previous user
+	 * to log in with only a username and password.
+	 * 
+	 * @param consumerKey
+	 *            the consumerKey of the account to switch to
+	 * @param consumerSecret
+	 *            the consumerSecret of the account to switch to
+	 * @param accessToken
+	 *            the accessToken of the account to switch to
+	 * @param accessTokenSecret
+	 *            the accessTokenSecret of the account to switch to
+	 * @param username
+	 *            the username of the account.
+	 * @param password
+	 *            the password for the account.
+	 * @throws RunTimeException
+	 *             if the twitter4j.propertis file does not exist.
+	 * @throws RunTimeException
+	 *             if the application fails to write to the twitter4j.properties
+	 *             file.
+	 * @throws RuntimeException
+	 *             if Twitter fails to switch the accounts.
+	 */
 	public final void signUp(final String consumerKey,
 			final String consumerSecret, final String accessToken,
-			final String accessTokenSecret, final String username, final String password) {
+			final String accessTokenSecret, final String username,
+			final String password) {
 		try {
 			Properties prop = new Properties();
 
@@ -416,14 +408,15 @@ public class TwitterEngine {
 			prop.setProperty("oauth.consumerSecret", consumerSecret);
 			prop.setProperty("oauth.accessToken", accessToken);
 			prop.setProperty("oauth.accessTokenSecret", accessTokenSecret);
-			
+
 			prop.setProperty(username + ".consumerKey", consumerKey);
 			prop.setProperty(username + ".consumerSecret", consumerSecret);
 			prop.setProperty(username + ".accessToken", accessToken);
 			prop.setProperty(username + ".accessTokenSecret", accessTokenSecret);
 			prop.setProperty(username + ".password", password);
 
-			prop.store(new FileOutputStream("src/twitter4j.properties", true), null);
+			prop.store(new FileOutputStream("src/twitter4j.properties", true),
+					null);
 
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
@@ -450,18 +443,20 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method allows the logged in user to switch accounts. It also updates
-	 * the twitter4j.properties file to allow the new user to be automatically
-	 * logged in on startup.
+	 * This method will switch the current user's account with the account
+	 * associated with the given username if the given password is correct for
+	 * the given username.
 	 * 
-	 * @param consumerKey
-	 *            the consumerKey of the account to switch to
-	 * @param consumerSecret
-	 *            the consumerSecret of the account to switch to
-	 * @param accessToken
-	 *            the accessToken of the account to switch to
-	 * @param accessTokenSecret
-	 *            the accessTokenSecret of the account to switch to
+	 * @param username
+	 *            the username associated with the account.
+	 * @param password
+	 *            the password associated with the given username.
+	 * 
+	 * @throws RunTimeException
+	 *             if the given password is incorrect.
+	 * @throws RunTimeException
+	 *             if the application fails to load from the
+	 *             twitter4j.properties file.
 	 * @throws RuntimeException
 	 *             if Twitter fails to switch the accounts.
 	 */
@@ -470,15 +465,20 @@ public class TwitterEngine {
 			Properties prop = new Properties();
 			prop.load(new FileInputStream("src/twitter4j.properties"));
 
-			if(prop.getProperty(username + ".password").compareTo(password) != 0){
-				throw new IllegalArgumentException("Username or password is incorrect.");
+			if (prop.getProperty(username + ".password").compareTo(password) != 0) {
+				throw new IllegalArgumentException(
+						"Username or password is incorrect.");
 			}
-			
-			final String consumerKey = prop.getProperty(username + ".consumerKey");
-			final String consumerSecret = prop.getProperty(username + ".consumerSecret");
-			final String accessToken = prop.getProperty(username + ".accessToken");
-			final String accessTokenSecret = prop.getProperty(username + ".accessTokenSecret");
-			
+
+			final String consumerKey = prop.getProperty(username
+					+ ".consumerKey");
+			final String consumerSecret = prop.getProperty(username
+					+ ".consumerSecret");
+			final String accessToken = prop.getProperty(username
+					+ ".accessToken");
+			final String accessTokenSecret = prop.getProperty(username
+					+ ".accessTokenSecret");
+
 			prop.setProperty("oauth.consumerKey", consumerKey);
 			prop.setProperty("oauth.consumerSecret", consumerSecret);
 			prop.setProperty("oauth.accessToken", accessToken);
@@ -503,21 +503,32 @@ public class TwitterEngine {
 					+ ex.getMessage());
 		}
 	}
-	
-	public void signOut(){
+
+	/**
+	 * This method logs the current user out of the application and Twitter. It
+	 * also changes the twitter4j.properties file so that the current user will
+	 * not automatically log in upon startup.
+	 * 
+	 * @throws RunTimeException
+	 *             if the application fails to load from the
+	 *             twitter4j.properties file.
+	 * @throws RuntimeException
+	 *             if Twitter fails to switch the accounts.
+	 */
+	public void signOut() {
 		try {
 			engine.setOAuthAccessToken(null);
 			engine.shutdown();
 			Properties prop = new Properties();
 			prop.load(new FileInputStream("src/twitter4j.properties"));
-			
+
 			prop.remove("oauth.consumerKey");
 			prop.remove("oauth.consumerSecret");
 			prop.remove("oauth.accessToken");
 			prop.remove("oauth.accessTokenSecret");
-			
+
 			prop.store(new FileOutputStream("src/twitter4j.properties"), null);
-			
+
 		} catch (IOException ex) {
 			throw new RuntimeException("Failed to load from .properties file: "
 					+ ex.getMessage());
@@ -528,10 +539,10 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method adds a status to the logged in user's favorites
+	 * This method adds a status to the logged in user's favorites.
 	 * 
 	 * @param id
-	 *            the status to be favorited
+	 *            the status to be favorited.
 	 */
 	public final void addFavorite(final long id) {
 		try {
@@ -542,10 +553,10 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method deletes a status from the logged in user's favorites
+	 * This method deletes a status from the logged in user's favorites.
 	 * 
 	 * @param id
-	 *            the status to delete from favorites
+	 *            the status to delete from favorites.
 	 */
 	public final void deleteFavorite(final long id) {
 		try {
@@ -556,9 +567,10 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method gets the list of favorites of the logged in user
+	 * This method gets the list of favorites of the logged in user.
 	 * 
-	 * 
+	 * @throws RunTimeException
+	 *             if Twitter fails to retrieve the user's favorites.
 	 */
 	public final void showUserFavorites() {
 		try {
@@ -578,10 +590,12 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method gets the list of favorites of the requested user
+	 * This method gets the list of favorites of the requested user.
 	 * 
 	 * @param screenName
-	 *            the user to get list of favorites from
+	 *            the user to get list of favorites from.
+	 * @throws RunTimeException
+	 *             if Twitter fails to retrieve the user's favorites.
 	 */
 	public final void showUserFavorites(final String screenName) {
 		try {
@@ -603,7 +617,10 @@ public class TwitterEngine {
 
 	/**
 	 * This method updates the table model to show the logged in user's home
-	 * time line
+	 * time line.
+	 * 
+	 * @throws RunTimeException
+	 *             if Twitter fails to retrieve the user's home timeline.
 	 */
 	public final void showHomeTimeline() {
 		try {
@@ -624,114 +641,12 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method gets all direct messages that the logged in user has sent to
-	 * them.
-	 */
-	public final void getInbox() {
-		try {
-			ResponseList<DirectMessage> list = engine.getDirectMessages();
-			messageList.clear();
-			messageList.add(list);
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to retrieve messages.");
-		}
-	}
-
-	/**
-	 * This method gets all the sent messages by the logged in user
-	 */
-	public final void getSentMessages() {
-		try {
-			ResponseList<DirectMessage> list = engine.getSentDirectMessages();
-			messageList.clear();
-			messageList.add(list);
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to retrieve sent messages.");
-		}
-	}
-
-	/**
-	 * This method shows the requested message
-	 * 
-	 * @param id
-	 *            the message to show
-	 */
-	public final DirectMessage showMessage(final long id) {
-		try {
-			return engine.showDirectMessage(id);
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to show message.");
-		}
-	}
-
-	/**
-	 * THis method sends a message to a user from the logged in user
-	 * 
-	 * @param id
-	 *            the user id to receive the message
-	 * @param text
-	 *            the message itself
-	 */
-	public final void sendMessage(final long id, final String text) {
-		try {
-			engine.sendDirectMessage(id, text);
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to send message.");
-		}
-	}
-
-	/**
-	 * This method deletes the requested message
-	 * 
-	 * @param id
-	 *            the message to delete
-	 */
-	public final void deleteMessage(final long id) {
-		try {
-			engine.destroyDirectMessage(id);
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to delete message.");
-		}
-	}
-
-	/**
-	 * This method retrives the messages sent and received between the logged in
-	 * user and the requested user and orders them by date created.
+	 * This method reports the requested user as a spammer.
 	 * 
 	 * @param screenName
-	 *            the requested user to see the conversation between
-	 */
-	public final void showConversation(final String screenName) {
-		try {
-			ResponseList<DirectMessage> sent = engine.getSentDirectMessages();
-			ResponseList<DirectMessage> received = engine.getDirectMessages();
-			ArrayList<DirectMessage> conversation = new ArrayList<DirectMessage>();
-			for (DirectMessage m : sent) {
-				if (m.getRecipientScreenName().equals(screenName)) {
-					conversation.add(m);
-				}
-			}
-			for (DirectMessage m : received) {
-				if (m.getSenderScreenName().equals(screenName)) {
-					conversation.add(m);
-				}
-			}
-
-			Collections.sort(conversation, new MessageComparator());
-			messageList.clear();
-			messageList.add(conversation);
-
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to retrieve conversation.");
-		}
-
-	}
-
-	/**
-	 * This method reports the requested user as a spammer
-	 * 
-	 * @param screenName
-	 *            the user to report as a spammer
+	 *            the user to report as a spammer.
+	 * @throws RunTimeException
+	 *             if Twitter fails to report the user.
 	 */
 	public final void reportSpam(final String screenName) {
 		try {
@@ -742,10 +657,12 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method blocks the requested user from the logged in user
+	 * This method blocks the requested user from the logged in user.
 	 * 
 	 * @param screenName
-	 *            the user to block
+	 *            the user to block.
+	 * @throws RunTimeException
+	 *             if Twitter fails to block the given user.
 	 */
 	public final void blockUser(final String screenName) {
 		try {
@@ -756,10 +673,12 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method unblocks the requested user from the logged in user
+	 * This method unblocks the requested user from the logged in user.
 	 * 
 	 * @param screenName
-	 *            the user to unblock
+	 *            the user to unblock.
+	 * @throws RunTimeException
+	 *             if Twitter fails to unblock the given user.
 	 */
 	public final void unblockUser(final String screenName) {
 		try {
@@ -771,6 +690,10 @@ public class TwitterEngine {
 
 	/**
 	 * This method shows the users blocked by the logged in user
+	 * 
+	 * @throws RunTimeException
+	 *             if Twitter fails to show the users blocked by the logged in
+	 *             user.
 	 */
 	public final void showBlockedUsers() {
 		try {
@@ -795,19 +718,6 @@ public class TwitterEngine {
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to show blocked users.");
-		}
-	}
-
-	/**
-	 * This method shows the users who follow the logged in user
-	 */
-	public final void showFollowers() {
-		try {
-			PagableResponseList<User> result = engine.getFriendsList(
-					engine.getScreenName(), 20);
-			friendsList = new UserModel(result);
-		} catch (Exception ex) {
-			throw new RuntimeException("Failed to show users that follow you.");
 		}
 	}
 }
