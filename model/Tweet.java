@@ -48,7 +48,8 @@ public class Tweet {
 	 */
 	public Tweet(final long id, final java.util.Date createdAt,
 			final String loginName, final String displayName,
-			final String text, final int friendsCount, final int followersCount) {
+			final String text, final int friendsCount, 
+			final int followersCount) {
 		this.id = id;
 		this.createdAt = createdAt;
 		this.loginName = loginName;

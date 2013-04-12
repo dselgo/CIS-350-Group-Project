@@ -22,7 +22,6 @@ public class TrendModel extends AbstractListModel {
 	 */
 	public TrendModel() {
 		trends = null;
-		;
 	}
 
 	/**
@@ -39,8 +38,8 @@ public class TrendModel extends AbstractListModel {
 	/**
 	 * Returns the number of trends stored in the TrendModel.
 	 * 
-	 * @return returns the number of trends stored in the TrendModel.
-	 * @return 0 if trends is null.
+	 * @return returns the number of trends stored in the TrendModel,
+	 * 		   0 if trends is null.
 	 */
 	public int getSize() {
 		if (trends == null) {
@@ -54,8 +53,7 @@ public class TrendModel extends AbstractListModel {
 	 * 
 	 * @param index
 	 *            the index of the trend desired.
-	 * @return the trend at the given index.
-	 * @return "<null>" if trends is null.
+	 * @return the trend at the given index, "<null>" if trends is null.
 	 */
 	public String getElementAt(final int index) {
 		if (trends == null) {

@@ -39,8 +39,8 @@ public class UserModel extends AbstractListModel {
 	/**
 	 * Returns the number of users stored in the UserModel.
 	 * 
-	 * @return returns the number of users stored in the UserModel.
-	 * @return 0 if users is null.
+	 * @return returns the number of users stored in the UserModel,
+			   0 if users is null.
 	 */
 	public int getSize() {
 		if (users == null) {
@@ -54,8 +54,8 @@ public class UserModel extends AbstractListModel {
 	 * 
 	 * @param index
 	 *            the index of the user desired.
-	 * @return the screen name of the user at the given index.
-	 * @return "<null>" if users is null.
+	 * @return the screen name of the user at the given index, 
+	 *         "<null>" if users is null.
 	 */
 	public String getElementAt(final int index) {
 		if (users == null) {

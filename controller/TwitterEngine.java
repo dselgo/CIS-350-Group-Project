@@ -280,7 +280,8 @@ public class TwitterEngine {
 				userList = new UserModel(users);
 				return userList;
 			} else {
-				return userList = new UserModel();
+				userList = new UserModel();
+				return userList;
 			}
 		} catch (TwitterException ex) {
 			throw new RuntimeException("Failed to generate suggested users"
@@ -303,7 +304,8 @@ public class TwitterEngine {
 				trendList = new TrendModel(trends);
 				return trendList;
 			} else {
-				return trendList = new TrendModel();
+				trendList = new TrendModel();
+				return trendList;
 			}
 
 		} catch (TwitterException ex) {
@@ -412,7 +414,8 @@ public class TwitterEngine {
 			prop.setProperty(username + ".consumerKey", consumerKey);
 			prop.setProperty(username + ".consumerSecret", consumerSecret);
 			prop.setProperty(username + ".accessToken", accessToken);
-			prop.setProperty(username + ".accessTokenSecret", accessTokenSecret);
+			prop.setProperty(username + ".accessTokenSecret",
+					accessTokenSecret);
 			prop.setProperty(username + ".password", password);
 
 			prop.store(new FileOutputStream("src/twitter4j.properties", true),
@@ -460,12 +463,14 @@ public class TwitterEngine {
 	 * @throws RuntimeException
 	 *             if Twitter fails to switch the accounts.
 	 */
-	public final void switchAccount(final String username, final String password) {
+	public final void switchAccount(final String username, 
+			final String password) {
 		try {
 			Properties prop = new Properties();
 			prop.load(new FileInputStream("src/twitter4j.properties"));
 
-			if (prop.getProperty(username + ".password").compareTo(password) != 0) {
+			if (prop.getProperty(username + ".password").compareTo(password) 
+					!= 0) {
 				throw new IllegalArgumentException(
 						"Username or password is incorrect.");
 			}
@@ -689,7 +694,7 @@ public class TwitterEngine {
 	}
 
 	/**
-	 * This method shows the users blocked by the logged in user
+	 * This method shows the users blocked by the logged in user.
 	 * 
 	 * @throws RunTimeException
 	 *             if Twitter fails to show the users blocked by the logged in
